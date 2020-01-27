@@ -1,7 +1,26 @@
 <?xml version="1.0"?>
 <!DOCTYPE profile>
+<!ENTITY domain_name "caasp.local">
+<!ENTITY local_net "192.168.15">
+<!ENTITY root_password "susesuse">
 <profile xmlns="http://www.suse.com/1.0/yast2ns" xmlns:config="http://www.suse.com/1.0/configns">
 
+  <scripts>
+    <chroot-scripts config:type="list">
+      <script>
+        <chrooted config:type="boolean">true</chrooted>
+        <filename>add_sles_sudo_rule.sh</filename>
+        <interpreter>shell</interpreter>
+        <source>
+<![CDATA[
+#!/bin/sh
+echo "domain=&domain_name;" >> /root/poc-variable
+]]>
+          </source>
+      </script>
+    </chroot-scripts>
+  </scripts>
+  
   <bootloader>
     <global>
       <generic_mbr>true</generic_mbr>
@@ -77,10 +96,10 @@
       <dhcp_hostname config:type="boolean">true</dhcp_hostname>
       <resolv_conf_policy>auto</resolv_conf_policy>
       <write_hostname config:type="boolean">false</write_hostname>
-      <domain>ses6.suse.ru</domain>
-      <hostname>ses-admin</hostname>
+      <domain>&domain_name;</domain>
+      <hostname>admin</hostname>
       <searchlist config:type="list">
-        <search>ses6.suse.ru</search>
+        <search>&domain_name;</search>
       </searchlist>
     </dns>
     <interfaces config:type="list">
@@ -104,7 +123,7 @@
       <interface>
         <bootproto>static</bootproto>
         <device>eth1</device>
-        <ipaddr>192.168.15.254</ipaddr>
+        <ipaddr>&local_net;.254</ipaddr>
         <netmask>255.255.255.0</netmask>
         <prefixlen>24</prefixlen>
         <startmode>auto</startmode>
@@ -165,15 +184,8 @@
   <users config:type="list">
     <user>
       <username>root</username>
-      <user_password>!</user_password>
-      <encrypted config:type="boolean">true</encrypted>
-    </user>
-    <user>
-      <username>sles</username>
-      <user_password>!</user_password>
+      <user_password>&root_password;</user_password>
       <encrypted config:type="boolean">true</encrypted>
     </user>
   </users>
-
-
 </profile>
