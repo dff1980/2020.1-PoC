@@ -44,7 +44,7 @@ Currently, PoC hosted on VMware VSphere.
     
      32 GB RAM
      
-     1 x HDD 100 GB
+     4 x HDD 100 GB
      
      1 LAN
 
