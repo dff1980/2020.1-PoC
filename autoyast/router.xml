@@ -77,6 +77,11 @@
       <dhcp_hostname config:type="boolean">true</dhcp_hostname>
       <resolv_conf_policy>auto</resolv_conf_policy>
       <write_hostname config:type="boolean">false</write_hostname>
+      <domain>ses6.suse.ru</domain>
+      <hostname>ses-admin</hostname>
+      <searchlist config:type="list">
+        <search>ses6.suse.ru</search>
+      </searchlist>
     </dns>
     <interfaces config:type="list">
       <interface>
@@ -96,6 +101,14 @@
         <startmode>nfsroot</startmode>
         <usercontrol>no</usercontrol>
       </interface>
+      <interface>
+        <bootproto>static</bootproto>
+        <device>eth1</device>
+        <ipaddr>192.168.15.254</ipaddr>
+        <netmask>255.255.255.0</netmask>
+        <prefixlen>24</prefixlen>
+        <startmode>auto</startmode>
+      </interface>
     </interfaces>
     <ipv6 config:type="boolean">true</ipv6>
     <keep_install_network config:type="boolean">true</keep_install_network>
@@ -112,7 +125,6 @@
     <ntp_policy>auto</ntp_policy>
     <ntp_servers config:type="list">
       <ntp_server>
-        <!-- replace ntp server address value bellow with one from your infrastructure -->
         <address>0.novell.pool.ntp.org</address>
         <iburst config:type="boolean">true</iburst>
         <offline config:type="boolean">true</offline>
@@ -160,31 +172,8 @@
       <username>sles</username>
       <user_password>!</user_password>
       <encrypted config:type="boolean">true</encrypted>
-      <authorized_keys config:type="list">
-        <authorized_key><!-- replace this comment with a public ssh key --></authorized_key>
-      </authorized_keys>
     </user>
   </users>
 
-  <!-- register -->
-  <suse_register>
-    <do_registration config:type="boolean">true</do_registration>
-    <install_updates config:type="boolean">true</install_updates>
-    <email><!-- replace this comment with an email address used for registration --></email>
-    <reg_code><!-- replace this comment with a CaaSP registration code --></reg_code>
-    <slp_discovery config:type="boolean">false</slp_discovery>
-    <addons config:type="list">
-      <addon>
-        <name>sle-module-containers</name>
-        <version>15.1</version>
-        <arch>x86_64</arch>
-      </addon>
-      <addon>
-        <name>caasp</name>
-        <version>4.0</version>
-        <arch>x86_64</arch>
-        <reg_code><!-- replace this comment with a CaaSP registration code --></reg_code>
-      </addon>
-    </addons>
-  </suse_register>
+
 </profile>
