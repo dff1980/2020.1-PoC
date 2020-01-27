@@ -2,24 +2,6 @@
 <!DOCTYPE profile>
 <profile xmlns="http://www.suse.com/1.0/yast2ns" xmlns:config="http://www.suse.com/1.0/configns">
 
-  <!--Add user to sudoers-->
-  <scripts>
-    <chroot-scripts config:type="list">
-      <script>
-        <chrooted config:type="boolean">true</chrooted>
-        <filename>add_sles_sudo_rule.sh</filename>
-        <interpreter>shell</interpreter>
-        <source>
-<![CDATA[
-#!/bin/sh
-echo "Defaults:sles !targetpw
-sles ALL=(ALL,ALL) NOPASSWD: ALL" > /etc/sudoers.d/sles
-]]>
-          </source>
-      </script>
-    </chroot-scripts>
-  </scripts>
-
   <bootloader>
     <global>
       <generic_mbr>true</generic_mbr>
@@ -41,6 +23,9 @@ sles ALL=(ALL,ALL) NOPASSWD: ALL" > /etc/sudoers.d/sles
       <partition_alignment config:type="symbol">align_optimal</partition_alignment>
       <start_multipath config:type="boolean">false</start_multipath>
     </storage>
+    <semi-automatic config:type="list">
+      <semi-automatic_entry>scc</semi-automatic_entry>
+    </semi-automatic>
   </general>
 
   <!-- configure local storage -->
@@ -57,11 +42,6 @@ sles ALL=(ALL,ALL) NOPASSWD: ALL" > /etc/sudoers.d/sles
         <partition>
           <filesystem config:type="symbol">btrfs</filesystem>
           <mount>/</mount>
-          <size>30gb</size>
-        </partition>
-        <partition>
-          <filesystem config:type="symbol">xfs</filesystem>
-          <mount>/var/lib</mount>
           <size>max</size>
         </partition>
       </partitions>
@@ -84,7 +64,7 @@ sles ALL=(ALL,ALL) NOPASSWD: ALL" > /etc/sudoers.d/sles
   </language>
   <timezone>
     <hwclock>UTC</hwclock>
-    <timezone>Etc/GMT</timezone>
+    <timezone>Europe/Moscow</timezone>
   </timezone>
 
   <!-- set up networking -->
