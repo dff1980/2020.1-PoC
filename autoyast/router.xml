@@ -10,9 +10,7 @@
 <!ENTITY worker-02_node_mac "00:50:56:b2:85:c2">
 <!ENTITY worker-03_node_mac "00:50:56:b2:85:c3">
 <!ENTITY worker-04_node_mac "00:50:56:b2:85:c4">
-
 <profile xmlns="http://www.suse.com/1.0/yast2ns" xmlns:config="http://www.suse.com/1.0/configns">
-
   <scripts>
     <chroot-scripts config:type="list">
       <script>
