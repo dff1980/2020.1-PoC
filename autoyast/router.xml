@@ -3,6 +3,14 @@
 <!ENTITY domain_name "caasp.local">
 <!ENTITY local_net "192.168.15">
 <!ENTITY root_password "susesuse">
+<!ENTITY eth0_mac "00:50:56:b2:85:b0">
+<!ENTITY eth1_mac "00:50:56:b2:85:b1">
+<!ENTITY master_node_mac "00:50:56:b2:85:c0">
+<!ENTITY worker-01_node_mac "00:50:56:b2:85:c1">
+<!ENTITY worker-02_node_mac "00:50:56:b2:85:c2">
+<!ENTITY worker-03_node_mac "00:50:56:b2:85:c3">
+<!ENTITY worker-04_node_mac "00:50:56:b2:85:c4">
+
 <profile xmlns="http://www.suse.com/1.0/yast2ns" xmlns:config="http://www.suse.com/1.0/configns">
 
   <scripts>
@@ -133,6 +141,18 @@ echo "domain=&domain_name;" >> /root/poc-variable
     <keep_install_network config:type="boolean">true</keep_install_network>
     <setup_before_proposal config:type="boolean">true</setup_before_proposal>
     <managed config:type="boolean">false</managed>
+    <net-udev config:type="list">
+      <rule>
+        <name>eth0</name>
+        <rule>ATTR{address}</rule>
+        <value>&eth0_mac;</value>
+      </rule>
+      <rule>
+        <name>eth1</name>
+        <rule>ATTR{address}</rule>
+        <value>&eth1_mac;</value>
+      </rule>
+    </net-udev>
     <routing>
       <ipv4_forward config:type="boolean">true</ipv4_forward>
       <ipv6_forward config:type="boolean">true</ipv6_forward>
@@ -180,7 +200,6 @@ echo "domain=&domain_name;" >> /root/poc-variable
     </services>
   </services-manager>
 
-  <!-- disable root password and add ssh keys -->
   <users config:type="list">
     <user>
       <username>root</username>
@@ -188,4 +207,250 @@ echo "domain=&domain_name;" >> /root/poc-variable
       <encrypted config:type="boolean">true</encrypted>
     </user>
   </users>
+  
+  <!-- DHCP Server -->
+    <dhcp-server>
+    <allowed_interfaces config:type="list">
+      <allowed_interface>eth1</allowed_interface>
+    </allowed_interfaces>
+    <chroot>1</chroot>
+    <other_options/>
+    <settings config:type="list">
+      <settings_entry>
+        <children config:type="list"/>
+        <directives config:type="list">
+          <listentry>
+            <key>hardware</key>
+            <type>directive</type>
+            <value>ethernet &master_node_mac;</value>
+          </listentry>
+          <listentry>
+            <key>fixed-address</key>
+            <type>directive</type>
+            <value>&local_net;.10</value>
+          </listentry>
+        </directives>
+        <id>master</id>
+        <options config:type="list">
+          <option>
+            <key>host-name</key>
+            <type>option</type>
+            <value>"master.&domain_name;"</value>
+          </option>
+        </options>
+        <parent_id>&local_net;.0 netmask 255.255.255.0</parent_id>
+        <parent_type>subnet</parent_type>
+        <type>host</type>
+      </settings_entry>
+      <settings_entry>
+        <children config:type="list"/>
+        <directives config:type="list">
+          <listentry>
+            <key>hardware</key>
+            <type>directive</type>
+            <value>ethernet &worker-01_node_mac;</value>
+          </listentry>
+          <listentry>
+            <key>fixed-address</key>
+            <type>directive</type>
+            <value>&local_net;.11</value>
+          </listentry>
+        </directives>
+        <id>worker-01</id>
+        <options config:type="list">
+          <option>
+            <key>host-name</key>
+            <type>option</type>
+            <value>"worker-01.&domain_name;"</value>
+          </option>
+        </options>
+        <parent_id>&local_net;.0 netmask 255.255.255.0</parent_id>
+        <parent_type>subnet</parent_type>
+        <type>host</type>
+      </settings_entry>
+      <settings_entry>
+        <children config:type="list"/>
+        <directives config:type="list">
+          <listentry>
+            <key>hardware</key>
+            <type>directive</type>
+            <value>ethernet &worker-02_node_mac;</value>
+          </listentry>
+          <listentry>
+            <key>fixed-address</key>
+            <type>directive</type>
+            <value>&local_net;.12</value>
+          </listentry>
+        </directives>
+        <id>worker-02</id>
+        <options config:type="list">
+          <option>
+            <key>host-name</key>
+            <type>option</type>
+            <value>"worker-02.&domain_name;"</value>
+          </option>
+        </options>
+        <parent_id>&local_net;.0 netmask 255.255.255.0</parent_id>
+        <parent_type>subnet</parent_type>
+        <type>host</type>
+      </settings_entry>
+      <settings_entry>
+        <children config:type="list"/>
+        <directives config:type="list">
+          <listentry>
+            <key>hardware</key>
+            <type>directive</type>
+            <value>ethernet &worker-03_node_mac;</value>
+          </listentry>
+          <listentry>
+            <key>fixed-address</key>
+            <type>directive</type>
+            <value>&local_net;.13</value>
+          </listentry>
+        </directives>
+        <id>worker-03</id>
+        <options config:type="list">
+          <option>
+            <key>host-name</key>
+            <type>option</type>
+            <value>"worker-03.&domain_name;"</value>
+          </option>
+        </options>
+        <parent_id>&local_net;.0 netmask 255.255.255.0</parent_id>
+        <parent_type>subnet</parent_type>
+        <type>host</type>
+      </settings_entry>
+      <settings_entry>
+        <children config:type="list"/>
+        <directives config:type="list">
+          <listentry>
+            <key>hardware</key>
+            <type>directive</type>
+            <value>ethernet &worker-04_node_mac;</value>
+          </listentry>
+          <listentry>
+            <key>fixed-address</key>
+            <type>directive</type>
+            <value>&local_net;.14</value>
+          </listentry>
+        </directives>
+        <id>worker-04</id>
+        <options config:type="list">
+          <option>
+            <key>host-name</key>
+            <type>option</type>
+            <value>"worker-04.&domain_name;"</value>
+          </option>
+        </options>
+        <parent_id>&local_net;.0 netmask 255.255.255.0</parent_id>
+        <parent_type>subnet</parent_type>
+        <type>host</type>
+      </settings_entry>
+      <settings_entry>
+        <children config:type="list">
+          <child>
+            <id>master</id>
+            <type>host</type>
+          </child>
+          <child>
+            <id>worker-01</id>
+            <type>host</type>
+          </child>
+          <child>
+            <id>worker-02</id>
+            <type>host</type>
+          </child>
+          <child>
+            <id>worker-03</id>
+            <type>host</type>
+          </child>
+          <child>
+            <id>worker-04</id>
+            <type>host</type>
+          </child>
+        </children>
+        <directives config:type="list">
+          <listentry>
+            <key>range</key>
+            <type>directive</type>
+            <value>&local_net;.100 &local_net;.200</value>
+          </listentry>
+          <listentry>
+            <key>default-lease-time</key>
+            <type>directive</type>
+            <value>14400</value>
+          </listentry>
+          <listentry>
+            <key>max-lease-time</key>
+            <type>directive</type>
+            <value>172800</value>
+          </listentry>
+          <listentry>
+            <key>next-server</key>
+            <type>directive</type>
+            <value>&local_net;.254</value>
+          </listentry>
+          <listentry>
+            <key>filename</key>
+            <type>directive</type>
+            <value>"pxelinux.0"</value>
+          </listentry>
+        </directives>
+        <id>&local_net;.0 netmask 255.255.255.0</id>
+        <options config:type="list"/>
+        <parent_id/>
+        <parent_type/>
+        <type>subnet</type>
+      </settings_entry>
+      <settings_entry>
+        <children config:type="list">
+          <child>
+            <id>&local_net;.0 netmask 255.255.255.0</id>
+            <type>subnet</type>
+          </child>
+        </children>
+        <directives config:type="list">
+          <listentry>
+            <key>default-lease-time</key>
+            <type>directive</type>
+            <value>14400</value>
+          </listentry>
+          <listentry>
+            <key>ddns-update-style</key>
+            <type>directive</type>
+            <value>none</value>
+          </listentry>
+        </directives>
+        <id/>
+        <options config:type="list">
+          <option>
+            <key>domain-name</key>
+            <type>option</type>
+            <value>"&domain_name;"</value>
+          </option>
+          <option>
+            <key>domain-name-servers</key>
+            <type>option</type>
+            <value>&local_net;.254, 8.8.8.8</value>
+          </option>
+          <option>
+            <key>routers</key>
+            <type>option</type>
+            <value>&local_net;.254</value>
+          </option>
+          <option>
+            <key>ntp-servers</key>
+            <type>option</type>
+            <value>&local_net;.254</value>
+          </option>
+        </options>
+        <parent_id/>
+        <parent_type/>
+        <type/>
+      </settings_entry>
+    </settings>
+    <start_service>1</start_service>
+    <use_ldap>0</use_ldap>
+  </dhcp-server>
+  
 </profile>
