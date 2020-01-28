@@ -705,5 +705,20 @@ echo "domain=&domain_name;" >> /root/poc-variable
     </services>
   </services-manager>
 
+  <software>
+    <image/>
+    <install_recommended config:type="boolean">true</install_recommended>
+    <instsource/>
+    <packages config:type="list">
+      <package>tftp</package>
+    </packages>
+    <patterns config:type="list">
+      <pattern>dhcp_dns_server</pattern>
+    </patterns>
+    <products config:type="list">
+      <product>SLES</product>
+    </products>
+  </software>
+
 </profile>
 
