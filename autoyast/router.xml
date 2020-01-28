@@ -9,10 +9,10 @@
 <!ENTITY eth0_mac "00:50:56:b2:f3:d5" >
 <!ENTITY eth1_mac "00:50:56:b2:bf:aa" >
 <!ENTITY master_node_mac "00:50:56:b2:85:c0" >
-<!ENTITY worker-01_node_mac "00:50:56:b2:85:c1" >
-<!ENTITY worker-02_node_mac "00:50:56:b2:85:c2" >
-<!ENTITY worker-03_node_mac "00:50:56:b2:85:c3" >
-<!ENTITY worker-04_node_mac "00:50:56:b2:85:c4" >
+<!ENTITY worker_01_node_mac "00:50:56:b2:85:c1" >
+<!ENTITY worker_02_node_mac "00:50:56:b2:85:c2" >
+<!ENTITY worker_03_node_mac "00:50:56:b2:85:c3" >
+<!ENTITY worker_04_node_mac "00:50:56:b2:85:c4" >
  ]
 >
 <profile xmlns="http://www.suse.com/1.0/yast2ns" xmlns:config="http://www.suse.com/1.0/configns">
@@ -283,7 +283,7 @@ EOF
           <listentry>
             <key>hardware</key>
             <type>directive</type>
-            <value>ethernet &worker-01_node_mac;</value>
+            <value>ethernet &worker_01_node_mac;</value>
           </listentry>
           <listentry>
             <key>fixed-address</key>
@@ -309,7 +309,7 @@ EOF
           <listentry>
             <key>hardware</key>
             <type>directive</type>
-            <value>ethernet &worker-02_node_mac;</value>
+            <value>ethernet &worker_02_node_mac;</value>
           </listentry>
           <listentry>
             <key>fixed-address</key>
@@ -335,7 +335,7 @@ EOF
           <listentry>
             <key>hardware</key>
             <type>directive</type>
-            <value>ethernet &worker-03_node_mac;</value>
+            <value>ethernet &worker_03_node_mac;</value>
           </listentry>
           <listentry>
             <key>fixed-address</key>
@@ -361,7 +361,7 @@ EOF
           <listentry>
             <key>hardware</key>
             <type>directive</type>
-            <value>ethernet &worker-04_node_mac;</value>
+            <value>ethernet &worker_04_node_mac;</value>
           </listentry>
           <listentry>
             <key>fixed-address</key>
