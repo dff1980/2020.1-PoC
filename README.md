@@ -51,3 +51,13 @@ Currently, PoC hosted on VMware VSphere.
 ### Network Architecture
 All server connect to LAN network (isolate from another world). In current state - 192.168.15.0/24.
 Infrastructure server also connects to WAN.
+
+## Install Router
+You can use AutoYaST file to setup router and pre-configure Chrone, DNS and DHCP server, PXE, TFTP
+Boot from SLES15 SP1 DVD.
+On GRUB boot screen select install and press "e"/
+Add to kernel parameters:
+```
+netsetup=1 autoyast=https://raw.githubusercontent.com/dff1980/2020.1-PoC/master/autoyast/router.xml
+```
+After boot please register system
