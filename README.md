@@ -22,7 +22,7 @@ Currently, PoC hosted on VMware VSphere.
 ### Tech Specs
 - 1 dedicated infrastructure server ( DNS, DHCP, PXE, NTP, NAT, SMT, TFTP, CaaS admin)
     
-    16GB RAM
+    4GB RAM
     
     1 x HDD - 200GB
     
