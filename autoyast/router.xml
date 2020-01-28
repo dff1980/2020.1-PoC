@@ -675,7 +675,7 @@ EOF
       <hosts_entry>
         <host_address>&local_net;.254</host_address>
         <names config:type="list">
-          <name>router.&domain_name router</name>
+          <name>router.&domain_name; router</name>
         </names>
       </hosts_entry>
       <hosts_entry>
