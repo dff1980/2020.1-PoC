@@ -1,18 +1,20 @@
 <?xml version="1.0"?>
-<!DOCTYPE profile [
-<!ENTITY domain_name "caasp.local">
-<!ENTITY local_net "192.168.17">
-<!ENTITY in_addr_arpa "17.168.192">
-<!ENTITY wan_dns_server "8.8.8.8">
-<!ENTITY root_password "susesuse">
-<!ENTITY eth0_mac "00:50:56:b2:f3:d5">
-<!ENTITY eth1_mac "00:50:56:b2:bf:aa">
-<!ENTITY master_node_mac "00:50:56:b2:85:c0">
-<!ENTITY worker-01_node_mac "00:50:56:b2:85:c1">
-<!ENTITY worker-02_node_mac "00:50:56:b2:85:c2">
-<!ENTITY worker-03_node_mac "00:50:56:b2:85:c3">
-<!ENTITY worker-04_node_mac "00:50:56:b2:85:c4">
-]>
+<!DOCTYPE profile
+ [
+<!ENTITY domain_name "caasp.local" >
+<!ENTITY local_net "192.168.17" >
+<!ENTITY in_addr_arpa "17.168.192" >
+<!ENTITY wan_dns_server "8.8.8.8" >
+<!ENTITY root_password "susesuse" >
+<!ENTITY eth0_mac "00:50:56:b2:f3:d5" >
+<!ENTITY eth1_mac "00:50:56:b2:bf:aa" >
+<!ENTITY master_node_mac "00:50:56:b2:85:c0" >
+<!ENTITY worker-01_node_mac "00:50:56:b2:85:c1" >
+<!ENTITY worker-02_node_mac "00:50:56:b2:85:c2" >
+<!ENTITY worker-03_node_mac "00:50:56:b2:85:c3" >
+<!ENTITY worker-04_node_mac "00:50:56:b2:85:c4" >
+ ]
+>
 <profile xmlns="http://www.suse.com/1.0/yast2ns" xmlns:config="http://www.suse.com/1.0/configns">
   <scripts>
     <chroot-scripts config:type="list">
@@ -34,8 +36,14 @@ echo "domain=&domain_name;" >> /root/poc-variable
         <source>
 <![CDATA[
 #!/bin/sh
+mkdir -p /usr/share/rmt/public/repo/SUSE/Install/SLE-SERVER/15-SP1/
+mkdir -p /srv/tftpboot/sle15sp1
+mount /dev/cdrom /mnt
+rsync -avP /mnt/ /usr/share/rmt/public/repo/SUSE/Install/SLE-SERVER/15-SP1/
+cp /mnt/boot/x86_64/loader/{linux,initrd} /srv/tftpboot/sle15sp1/
+umount /mnt
 cp /usr/share/syslinux/vesamenu.c32 /usr/share/syslinux/pxelinux.0 /srv/tftpboot/
-mkdir /srv/tftpboot/pxelinux.cfg
+mkdir -p /srv/tftpboot/pxelinux.cfg
 cat << EOF >> /srv/tftpboot/pxelinux.cfg/default
 default vesamenu.c32
 prompt 0
