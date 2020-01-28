@@ -738,6 +738,7 @@ EOF
       <package>tftp</package>
       <package>syslinux</package>
       <package>open-iscsi</package>
+      <package>rsync</package>
     </packages>
     <patterns config:type="list">
       <pattern>dhcp_dns_server</pattern>
