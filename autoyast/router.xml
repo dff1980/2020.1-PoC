@@ -144,12 +144,6 @@ EOF
     </dns>
     <interfaces config:type="list">
       <interface>
-        <bootproto>dhcp</bootproto>
-        <device>eth0</device>
-        <dhclient_set_default_route>yes</dhclient_set_default_route>
-        <startmode>auto</startmode>
-      </interface>
-      <interface>
         <bootproto>static</bootproto>
         <device>lo</device>
         <firewall>no</firewall>
@@ -174,11 +168,6 @@ EOF
     <setup_before_proposal config:type="boolean">true</setup_before_proposal>
     <managed config:type="boolean">false</managed>
     <net-udev config:type="list">
-      <rule>
-        <name>eth0</name>
-        <rule>ATTR{address}</rule>
-        <value>&eth0_mac;</value>
-      </rule>
       <rule>
         <name>eth1</name>
         <rule>ATTR{address}</rule>
@@ -669,7 +658,7 @@ EOF
     </zones>
   </dns-server>
   
-    <host>
+  <host>
     <hosts config:type="list">
       <hosts_entry>
         <host_address>127.0.0.1</host_address>
