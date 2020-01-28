@@ -7,13 +7,13 @@ Local Net "192.168.17"
 in-addr_arpa "17.168.192"
 WAN DNS Server "8.8.8.8"
 root password "susesuse"
-eth0 MAC "00:50:56:b2:f3:d5"
-eth1 MAC "00:50:56:b2:bf:aa"
-Master Node MAC "00:50:56:b2:85:c0"
-Worker-01 Node MAC "00:50:56:b2:85:c1"
-Worker-02 Node MAC "00:50:56:b2:85:c2"
-Worker-03 Node MAC "00:50:56:b2:85:c3"
-Worker-04 Node MAC "00:50:56:b2:85:c4" 
+eth0 MAC "00:50:56:b2:3a:1c"
+eth1 MAC "00:50:56:b2:d7:6a"
+Master Node MAC "00:50:56:b2:e6:98"
+Worker-01 Node MAC "00:50:56:b2:e8:eb"
+Worker-02 Node MAC "00:50:56:b2:a1:f6"
+Worker-03 Node MAC "00:50:56:b2:cb:66"
+Worker-04 Node MAC "00:50:56:b2:3f:d1" 
 -->
 
 <profile xmlns="http://www.suse.com/1.0/yast2ns" xmlns:config="http://www.suse.com/1.0/configns">
@@ -170,12 +170,12 @@ EOF
       <rule>
         <name>eth0</name>
         <rule>ATTR{address}</rule>
-        <value>00:50:56:b2:f3:d5</value>
+        <value>00:50:56:b2:3a:1c</value>
       </rule>
       <rule>
         <name>eth1</name>
         <rule>ATTR{address}</rule>
-        <value>00:50:56:b2:bf:aa</value>
+        <value>00:50:56:b2:d7:6a</value>
       </rule>
     </net-udev>
     <routing>
@@ -247,7 +247,7 @@ EOF
           <listentry>
             <key>hardware</key>
             <type>directive</type>
-            <value>ethernet 00:50:56:b2:85:c0</value>
+            <value>ethernet 00:50:56:b2:e6:98</value>
           </listentry>
           <listentry>
             <key>fixed-address</key>
@@ -273,7 +273,7 @@ EOF
           <listentry>
             <key>hardware</key>
             <type>directive</type>
-            <value>ethernet 00:50:56:b2:85:c1</value>
+            <value>ethernet 00:50:56:b2:e8:eb</value>
           </listentry>
           <listentry>
             <key>fixed-address</key>
@@ -299,7 +299,7 @@ EOF
           <listentry>
             <key>hardware</key>
             <type>directive</type>
-            <value>ethernet 00:50:56:b2:85:c2</value>
+            <value>ethernet 00:50:56:b2:a1:f6</value>
           </listentry>
           <listentry>
             <key>fixed-address</key>
@@ -325,7 +325,7 @@ EOF
           <listentry>
             <key>hardware</key>
             <type>directive</type>
-            <value>ethernet 00:50:56:b2:85:c3</value>
+            <value>ethernet 00:50:56:b2:cb:66</value>
           </listentry>
           <listentry>
             <key>fixed-address</key>
@@ -351,7 +351,7 @@ EOF
           <listentry>
             <key>hardware</key>
             <type>directive</type>
-            <value>ethernet 00:50:56:b2:85:c4</value>
+            <value>ethernet 00:50:56:b2:3f:d1</value>
           </listentry>
           <listentry>
             <key>fixed-address</key>
