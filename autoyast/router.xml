@@ -169,6 +169,11 @@ EOF
     <managed config:type="boolean">false</managed>
     <net-udev config:type="list">
       <rule>
+        <name>eth0</name>
+        <rule>ATTR{address}</rule>
+        <value>&eth0_mac;</value>
+      </rule>
+      <rule>
         <name>eth1</name>
         <rule>ATTR{address}</rule>
         <value>&eth1_mac;</value>
