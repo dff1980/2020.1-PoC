@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE profile>
 <!ENTITY domain_name "caasp.local">
-<!ENTITY local_net "192.168.15">
-<!ENTITY in_addr_arpa "15.168.192">
+<!ENTITY local_net "192.168.17">
+<!ENTITY in_addr_arpa "17.168.192">
 <!ENTITY wan_dns_server "8.8.8.8">
 <!ENTITY root_password "susesuse">
-<!ENTITY eth0_mac "00:50:56:b2:85:b0">
-<!ENTITY eth1_mac "00:50:56:b2:85:b1">
+<!ENTITY eth0_mac "00:50:56:b2:f3:d5">
+<!ENTITY eth1_mac "00:50:56:b2:bf:aa">
 <!ENTITY master_node_mac "00:50:56:b2:85:c0">
 <!ENTITY worker-01_node_mac "00:50:56:b2:85:c1">
 <!ENTITY worker-02_node_mac "00:50:56:b2:85:c2">
