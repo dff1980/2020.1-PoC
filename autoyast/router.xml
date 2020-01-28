@@ -1,32 +1,24 @@
 <?xml version="1.0"?>
-<!DOCTYPE profile [
-<!ENTITY domain_name "caasp.local" >
-<!ENTITY local_net "192.168.17" >
-<!ENTITY in_addr_arpa "17.168.192" >
-<!ENTITY wan_dns_server "8.8.8.8" >
-<!ENTITY root_password "susesuse" >
-<!ENTITY eth0_mac "00:50:56:b2:f3:d5" >
-<!ENTITY eth1_mac "00:50:56:b2:bf:aa" >
-<!ENTITY master_node_mac "00:50:56:b2:85:c0" >
-<!ENTITY worker_01_node_mac "00:50:56:b2:85:c1" >
-<!ENTITY worker_02_node_mac "00:50:56:b2:85:c2" >
-<!ENTITY worker_03_node_mac "00:50:56:b2:85:c3" >
-<!ENTITY worker_04_node_mac "00:50:56:b2:85:c4" >
- ]>
+<!DOCTYPE profile >
+
+<!-- Change next data in document:
+Domain Name "caasp.local"
+Local Net "192.168.17"
+in-addr_arpa "17.168.192"
+WAN DNS Server "8.8.8.8"
+root password "susesuse"
+eth0 MAC "00:50:56:b2:f3:d5"
+eth1 MAC "00:50:56:b2:bf:aa"
+Master Node MAC "00:50:56:b2:85:c0"
+Worker-01 Node MAC "00:50:56:b2:85:c1"
+Worker-02 Node MAC "00:50:56:b2:85:c2"
+Worker-03 Node MAC "00:50:56:b2:85:c3"
+Worker-04 Node MAC "00:50:56:b2:85:c4" 
+-->
+
 <profile xmlns="http://www.suse.com/1.0/yast2ns" xmlns:config="http://www.suse.com/1.0/configns">
   <scripts>
     <chroot-scripts config:type="list">
-      <script>
-        <chrooted config:type="boolean">true</chrooted>
-        <filename>poc-variable.sh</filename>
-        <interpreter>shell</interpreter>
-        <source>
-<![CDATA[
-#!/bin/sh
-echo "domain=&domain_name;" >> /root/poc-variable
-]]>
-          </source>
-      </script>
       <script>
         <chrooted config:type="boolean">true</chrooted>
         <filename>tftp_config.sh</filename>
@@ -57,7 +49,7 @@ label harddisk
 label install-caasp-node
   menu label CaaSP Node
   kernel sle15sp1/linux
-  append load ramdisk=1 initrd=sle15sp1/initrd netsetup=dhcp install=http://router.&domain_name;/repo/SUSE/Install/SLE-SERVER/15-SP1/ autoyast=http://router.&domain_name;/autoyast/autoinst_caasp.xml
+  append load ramdisk=1 initrd=sle15sp1/initrd netsetup=dhcp install=http://router.caasp.local/repo/SUSE/Install/SLE-SERVER/15-SP1/ autoyast=http://router.caasp.local/autoyast/autoinst_caasp.xml
 
 EOF
 
@@ -143,10 +135,10 @@ EOF
       <dhcp_hostname config:type="boolean">true</dhcp_hostname>
       <resolv_conf_policy>auto</resolv_conf_policy>
       <write_hostname config:type="boolean">false</write_hostname>
-      <domain>&domain_name;</domain>
+      <domain>caasp.local</domain>
       <hostname>router</hostname>
       <searchlist config:type="list">
-        <search>&domain_name;</search>
+        <search>caasp.local</search>
       </searchlist>
     </dns>
     <interfaces config:type="list">
@@ -164,7 +156,7 @@ EOF
       <interface>
         <bootproto>static</bootproto>
         <device>eth1</device>
-        <ipaddr>&local_net;.254</ipaddr>
+        <ipaddr>192.168.17.254</ipaddr>
         <netmask>255.255.255.0</netmask>
         <prefixlen>24</prefixlen>
         <startmode>auto</startmode>
@@ -178,12 +170,12 @@ EOF
       <rule>
         <name>eth0</name>
         <rule>ATTR{address}</rule>
-        <value>&eth0_mac;</value>
+        <value>00:50:56:b2:f3:d5</value>
       </rule>
       <rule>
         <name>eth1</name>
         <rule>ATTR{address}</rule>
-        <value>&eth1_mac;</value>
+        <value>00:50:56:b2:bf:aa</value>
       </rule>
     </net-udev>
     <routing>
@@ -236,7 +228,7 @@ EOF
   <users config:type="list">
     <user>
       <username>root</username>
-      <user_password>&root_password;</user_password>
+      <user_password>susesuse</user_password>
       <encrypted config:type="boolean">true</encrypted>
     </user>
   </users>
@@ -255,12 +247,12 @@ EOF
           <listentry>
             <key>hardware</key>
             <type>directive</type>
-            <value>ethernet &master_node_mac;</value>
+            <value>ethernet 00:50:56:b2:85:c0</value>
           </listentry>
           <listentry>
             <key>fixed-address</key>
             <type>directive</type>
-            <value>&local_net;.10</value>
+            <value>192.168.17.10</value>
           </listentry>
         </directives>
         <id>master</id>
@@ -268,10 +260,10 @@ EOF
           <option>
             <key>host-name</key>
             <type>option</type>
-            <value>"master.&domain_name;"</value>
+            <value>"master.caasp.local"</value>
           </option>
         </options>
-        <parent_id>&local_net;.0 netmask 255.255.255.0</parent_id>
+        <parent_id>192.168.17.0 netmask 255.255.255.0</parent_id>
         <parent_type>subnet</parent_type>
         <type>host</type>
       </settings_entry>
@@ -281,12 +273,12 @@ EOF
           <listentry>
             <key>hardware</key>
             <type>directive</type>
-            <value>ethernet &worker_01_node_mac;</value>
+            <value>ethernet 00:50:56:b2:85:c1</value>
           </listentry>
           <listentry>
             <key>fixed-address</key>
             <type>directive</type>
-            <value>&local_net;.11</value>
+            <value>192.168.17.11</value>
           </listentry>
         </directives>
         <id>worker-01</id>
@@ -294,10 +286,10 @@ EOF
           <option>
             <key>host-name</key>
             <type>option</type>
-            <value>"worker-01.&domain_name;"</value>
+            <value>"worker-01.caasp.local"</value>
           </option>
         </options>
-        <parent_id>&local_net;.0 netmask 255.255.255.0</parent_id>
+        <parent_id>192.168.17.0 netmask 255.255.255.0</parent_id>
         <parent_type>subnet</parent_type>
         <type>host</type>
       </settings_entry>
@@ -307,12 +299,12 @@ EOF
           <listentry>
             <key>hardware</key>
             <type>directive</type>
-            <value>ethernet &worker_02_node_mac;</value>
+            <value>ethernet 00:50:56:b2:85:c2</value>
           </listentry>
           <listentry>
             <key>fixed-address</key>
             <type>directive</type>
-            <value>&local_net;.12</value>
+            <value>192.168.17.12</value>
           </listentry>
         </directives>
         <id>worker-02</id>
@@ -320,10 +312,10 @@ EOF
           <option>
             <key>host-name</key>
             <type>option</type>
-            <value>"worker-02.&domain_name;"</value>
+            <value>"worker-02.caasp.local"</value>
           </option>
         </options>
-        <parent_id>&local_net;.0 netmask 255.255.255.0</parent_id>
+        <parent_id>192.168.17.0 netmask 255.255.255.0</parent_id>
         <parent_type>subnet</parent_type>
         <type>host</type>
       </settings_entry>
@@ -333,12 +325,12 @@ EOF
           <listentry>
             <key>hardware</key>
             <type>directive</type>
-            <value>ethernet &worker_03_node_mac;</value>
+            <value>ethernet 00:50:56:b2:85:c3</value>
           </listentry>
           <listentry>
             <key>fixed-address</key>
             <type>directive</type>
-            <value>&local_net;.13</value>
+            <value>192.168.17.13</value>
           </listentry>
         </directives>
         <id>worker-03</id>
@@ -346,10 +338,10 @@ EOF
           <option>
             <key>host-name</key>
             <type>option</type>
-            <value>"worker-03.&domain_name;"</value>
+            <value>"worker-03.caasp.local"</value>
           </option>
         </options>
-        <parent_id>&local_net;.0 netmask 255.255.255.0</parent_id>
+        <parent_id>192.168.17.0 netmask 255.255.255.0</parent_id>
         <parent_type>subnet</parent_type>
         <type>host</type>
       </settings_entry>
@@ -359,12 +351,12 @@ EOF
           <listentry>
             <key>hardware</key>
             <type>directive</type>
-            <value>ethernet &worker_04_node_mac;</value>
+            <value>ethernet 00:50:56:b2:85:c4</value>
           </listentry>
           <listentry>
             <key>fixed-address</key>
             <type>directive</type>
-            <value>&local_net;.14</value>
+            <value>192.168.17.14</value>
           </listentry>
         </directives>
         <id>worker-04</id>
@@ -372,10 +364,10 @@ EOF
           <option>
             <key>host-name</key>
             <type>option</type>
-            <value>"worker-04.&domain_name;"</value>
+            <value>"worker-04.caasp.local"</value>
           </option>
         </options>
-        <parent_id>&local_net;.0 netmask 255.255.255.0</parent_id>
+        <parent_id>192.168.17.0 netmask 255.255.255.0</parent_id>
         <parent_type>subnet</parent_type>
         <type>host</type>
       </settings_entry>
@@ -406,7 +398,7 @@ EOF
           <listentry>
             <key>range</key>
             <type>directive</type>
-            <value>&local_net;.100 &local_net;.200</value>
+            <value>192.168.17.100 192.168.17.200</value>
           </listentry>
           <listentry>
             <key>default-lease-time</key>
@@ -421,7 +413,7 @@ EOF
           <listentry>
             <key>next-server</key>
             <type>directive</type>
-            <value>&local_net;.254</value>
+            <value>192.168.17.254</value>
           </listentry>
           <listentry>
             <key>filename</key>
@@ -429,7 +421,7 @@ EOF
             <value>"pxelinux.0"</value>
           </listentry>
         </directives>
-        <id>&local_net;.0 netmask 255.255.255.0</id>
+        <id>192.168.17.0 netmask 255.255.255.0</id>
         <options config:type="list"/>
         <parent_id/>
         <parent_type/>
@@ -438,7 +430,7 @@ EOF
       <settings_entry>
         <children config:type="list">
           <child>
-            <id>&local_net;.0 netmask 255.255.255.0</id>
+            <id>192.168.17.0 netmask 255.255.255.0</id>
             <type>subnet</type>
           </child>
         </children>
@@ -459,22 +451,22 @@ EOF
           <option>
             <key>domain-name</key>
             <type>option</type>
-            <value>"&domain_name;"</value>
+            <value>"caasp.local"</value>
           </option>
           <option>
             <key>domain-name-servers</key>
             <type>option</type>
-            <value>&local_net;.254, 8.8.8.8</value>
+            <value>192.168.17.254, 8.8.8.8</value>
           </option>
           <option>
             <key>routers</key>
             <type>option</type>
-            <value>&local_net;.254</value>
+            <value>192.168.17.254</value>
           </option>
           <option>
             <key>ntp-servers</key>
             <type>option</type>
-            <value>&local_net;.254</value>
+            <value>192.168.17.254</value>
           </option>
         </options>
         <parent_id/>
@@ -523,14 +515,14 @@ EOF
       </option>
       <option>
         <key>forwarders</key>
-        <value>127.0.0.1; &wan_dns_server;</value>
+        <value>127.0.0.1; 8.8.8.8</value>
       </option>
     </options>
     <start_service>1</start_service>
     <use_ldap>0</use_ldap>
     <zones config:type="list">
       <zone>
-        <file>master/&domain_name;</file>
+        <file>master/caasp.local</file>
         <options config:type="list">
           <option>
             <key>allow-transfer</key>
@@ -538,7 +530,7 @@ EOF
           </option>
           <option>
             <key>file</key>
-            <value>"master/&domain_name;"</value>
+            <value>"master/caasp.local"</value>
           </option>
           <option>
             <key>type</key>
@@ -547,73 +539,73 @@ EOF
         </options>
         <records config:type="list">
           <listentry>
-            <key>&domain_name;.</key>
+            <key>caasp.local.</key>
             <type>NS</type>
-            <value>ns.&domain_name;.</value>
+            <value>ns.caasp.local.</value>
           </listentry>
           <listentry>
             <key>ns</key>
             <type>A</type>
-            <value>&local_net;.254</value>
+            <value>192.168.17.254</value>
           </listentry>
           <listentry>
             <key>router</key>
             <type>A</type>
-            <value>&local_net;.254</value>
+            <value>192.168.17.254</value>
           </listentry>
           <listentry>
             <key>ntp</key>
             <type>A</type>
-            <value>&local_net;.254</value>
+            <value>192.168.17.254</value>
           </listentry>
           <listentry>
             <key>master</key>
             <type>A</type>
-            <value>&local_net;.10</value>
+            <value>192.168.17.10</value>
           </listentry>
           <listentry>
             <key>worker-01</key>
             <type>A</type>
-            <value>&local_net;.11</value>
+            <value>192.168.17.11</value>
           </listentry>
           <listentry>
             <key>worker-02</key>
             <type>A</type>
-            <value>&local_net;.12</value>
+            <value>192.168.17.12</value>
           </listentry>
           <listentry>
             <key>worker-03</key>
             <type>A</type>
-            <value>&local_net;.13</value>
+            <value>192.168.17.13</value>
           </listentry>
           <listentry>
             <key>worker-04</key>
             <type>A</type>
-            <value>&local_net;.14</value>
+            <value>192.168.17.14</value>
           </listentry>
         </records>
         <soa>
           <expiry>1w</expiry>
-          <mail>root.router.&domain_name;.</mail>
+          <mail>root.router.caasp.local.</mail>
           <minimum>1d</minimum>
           <refresh>3h</refresh>
           <retry>1h</retry>
           <serial>2019031800</serial>
-          <server>router.&domain_name;.</server>
+          <server>router.caasp.local.</server>
           <zone>@</zone>
         </soa>
         <this_zone_had_NS_record_at_start>1</this_zone_had_NS_record_at_start>
         <ttl>2d</ttl>
         <type>master</type>
-        <zone>&domain_name;</zone>
+        <zone>caasp.local</zone>
       </zone>
 
       <zone>
-        <file>master/&in_addr_arpa;.in-addr.arpa</file>
+        <file>master/17.168.192.in-addr.arpa</file>
         <options config:type="list">
           <option>
             <key>file</key>
-            <value>"master/&in_addr_arpa;.in-addr.arpa"</value>
+            <value>"master/17.168.192.in-addr.arpa"</value>
           </option>
           <option>
             <key>type</key>
@@ -622,50 +614,50 @@ EOF
         </options>
         <records config:type="list">
           <listentry>
-            <key>&in_addr_arpa;.in-addr.arpa.</key>
+            <key>17.168.192.in-addr.arpa.</key>
             <type>NS</type>
             <value>ses6.suse.ru.</value>
           </listentry>
           <listentry>
-            <key>10.&in_addr_arpa;.in-addr.arpa.</key>
+            <key>10.17.168.192.in-addr.arpa.</key>
             <type>PTR</type>
-            <value>master.&domain_name;.</value>
+            <value>master.caasp.local.</value>
           </listentry>
           <listentry>
-            <key>11.&in_addr_arpa;.in-addr.arpa.</key>
+            <key>11.17.168.192.in-addr.arpa.</key>
             <type>PTR</type>
-            <value>worker-01.&domain_name;.</value>
+            <value>worker-01.caasp.local.</value>
           </listentry>
           <listentry>
-            <key>12.&in_addr_arpa;.in-addr.arpa.</key>
+            <key>12.17.168.192.in-addr.arpa.</key>
             <type>PTR</type>
-            <value>worker-02.&domain_name;.</value>
+            <value>worker-02.caasp.local.</value>
           </listentry>
           <listentry>
-            <key>13.&in_addr_arpa;.in-addr.arpa.</key>
+            <key>13.17.168.192.in-addr.arpa.</key>
             <type>PTR</type>
-            <value>worker-03.&domain_name;.</value>
+            <value>worker-03.caasp.local.</value>
           </listentry>
           <listentry>
-            <key>14.&in_addr_arpa;.in-addr.arpa.</key>
+            <key>14.17.168.192.in-addr.arpa.</key>
             <type>PTR</type>
-            <value>worker-04.&domain_name;.</value>
+            <value>worker-04.caasp.local.</value>
           </listentry>
         </records>
         <soa>
           <expiry>1W</expiry>
-          <mail>root.router.&domain_name;.</mail>
+          <mail>root.router.caasp.local.</mail>
           <minimum>1D</minimum>
           <refresh>3H</refresh>
           <retry>1H</retry>
           <serial>2019031800</serial>
-          <server>router.&domain_name;.</server>
+          <server>router.caasp.local.</server>
           <zone>@</zone>
         </soa>
         <this_zone_had_NS_record_at_start>1</this_zone_had_NS_record_at_start>
         <ttl>2D</ttl>
         <type>master</type>
-        <zone>&in_addr_arpa;.in-addr.arpa</zone>
+        <zone>17.168.192.in-addr.arpa</zone>
       </zone>
     </zones>
   </dns-server>
@@ -679,9 +671,9 @@ EOF
         </names>
       </hosts_entry>
       <hosts_entry>
-        <host_address>&local_net;.254</host_address>
+        <host_address>192.168.17.254</host_address>
         <names config:type="list">
-          <name>router.&domain_name; router</name>
+          <name>router.caasp.local router</name>
         </names>
       </hosts_entry>
       <hosts_entry>
@@ -753,6 +745,5 @@ EOF
       <product>SLES</product>
     </products>
   </software>
-
+ 
 </profile>
-
