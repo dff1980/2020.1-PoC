@@ -229,7 +229,7 @@ EOF
     <user>
       <username>root</username>
       <user_password>susesuse</user_password>
-      <encrypted config:type="boolean">true</encrypted>
+      <encrypted config:type="boolean">false</encrypted>
     </user>
   </users>
   
