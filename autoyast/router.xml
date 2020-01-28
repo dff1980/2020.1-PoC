@@ -753,6 +753,7 @@ systemctl restart dhcpd.service
       <package>syslinux</package>
       <package>open-iscsi</package>
       <package>rsync</package>
+      <package>rmt-server</package>
     </packages>
     <patterns config:type="list">
       <pattern>dhcp_dns_server</pattern>
