@@ -87,25 +87,25 @@ systemctl restart dhcpd.service
   </bootloader>
   <general>
     <ask-list config:type="list">
-	<ask>
-      <pathlist config:type="list">
-        <path>networking,net-udev,0,rule,value</path>
-      </pathlist>
-      <question>Router eth0 MAC</question>
-      <type>string</type>
-	        <stage>initial</stage>
-      <default>00:50:56:b2:00:01</default>	  
-    </ask>
-	<ask>
-      <pathlist config:type="list">
-        <path>networking,net-udev,1,rule,value</path>
-      </pathlist>
-      <question>Router eth1 MAC</question>
-      <type>string</type>
-	        <stage>initial</stage>
-      <default>00:50:56:b2:00:02</default>	  
-    </ask>	
-  </ask-list>
+     <ask>
+       <pathlist config:type="list">
+         <path>networking,net-udev,0,rule,value</path>
+       </pathlist>
+       <question>Router eth0 MAC</question>
+       <type>string</type>
+       <stage>initial</stage>
+       <default>00:50:56:b2:00:01</default>	  
+     </ask>
+     <ask>
+       <pathlist config:type="list">
+         <path>networking,net-udev,1,rule,value</path>
+       </pathlist>
+       <question>Router eth1 MAC</question>
+       <type>string</type>
+       <stage>initial</stage>
+       <default>00:50:56:b2:00:02</default>	  
+     </ask>	
+    </ask-list>
     <!--<ask-list config:type="list"/>-->
     <mode>
       <confirm config:type="boolean">false</confirm>
