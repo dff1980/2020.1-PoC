@@ -137,12 +137,14 @@ Add to /etc/nginx/vhosts.d/rmt-server-http.conf
 systemctl restart nginx
 ```
 
-Change /usr/share/rmt/public/autoyast/autoinst_caasp.xml <ntp_server><address>
-Change /usr/share/rmt/public/autoyast/autoinst_caasp.xml <ntp-client><ntp_servers><ntp_server><address>
+Change /usr/share/rmt/public/autoyast/autoinst_caasp.xml `<ntp_server><address>`
+Change /usr/share/rmt/public/autoyast/autoinst_caasp.xml `<ntp-client><ntp_servers><ntp_server><address>`
 
 use `ssh-keygen` for generate ssh key pair
+```
 cat /root/.ssh/id_rsa.pub
-Change /usr/share/rmt/public/autoyast/autoinst_caasp.xml <users><user><username>sles</username><authorized_keys config:type="list"> <authorized_key>
+```
+Change /usr/share/rmt/public/autoyast/autoinst_caasp.xml `<users><user><username>sles</username><authorized_keys config:type="list"> <authorized_key>`
 
 ### EFI boot loader PXE
 ```
