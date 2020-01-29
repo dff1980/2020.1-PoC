@@ -105,7 +105,7 @@ get AutoYast Fingerprint
 openssl x509 -noout -fingerprint -sha256 -inform pem -in /etc/rmt/ssl/rmt-ca.crt
 ```
 Change /usr/share/rmt/public/autoyast/autoinst_caasp.xml <suse_register> (<reg_server>, <reg_server_cert_fingerprint>)
-
+```
   <!-- register -->
   <suse_register>
     <do_registration config:type="boolean">true</do_registration>
@@ -127,7 +127,7 @@ Change /usr/share/rmt/public/autoyast/autoinst_caasp.xml <suse_register> (<reg_s
       </addon>
     </addons>
   </suse_register>
-  
+```  
 Add to /etc/nginx/vhosts.d/rmt-server-http.conf
 ```
     location /autoyast {
