@@ -170,7 +170,7 @@ https://www.suse.com/c/multi-pxe-install-server/
 https://www.suse.com/c/secure-boot-net-install/
 
 ### Deploy SUSE CaaS Platform
-
+add 127.0.0.1 to /etc/resolve.conf
 ```
 eval "$(ssh-agent)"
 ssh-add ~/.ssh/id_rsa
@@ -179,5 +179,14 @@ ssh-add ~/.ssh/id_rsa
 skuba cluster init --control-plane 192.168.17.10 my-cluster
 cd my-cluster
 skuba node bootstrap --user sles --sudo --target master.caasp.local master
+skuba node join --role worker --user sles --sudo --target worker-01.caasp.local worker-01
+skuba node join --role worker --user sles --sudo --target worker-02.caasp.local worker-02
+skuba node join --role worker --user sles --sudo --target worker-03.caasp.local worker-03
+skuba node join --role worker --user sles --sudo --target worker-04.caasp.local worker-04
+skuba cluster status
 ```
-
+```
+sudo zypper in kubernetes-client
+mkdir -p ~/.kube
+cp admin.conf ~/.kube/config
+```
