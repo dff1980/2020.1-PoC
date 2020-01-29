@@ -147,3 +147,17 @@ mount –t vfat /media/<name of disc>/boot/x86_64/efi /tmp/efi-img
 cp /tmp/efi-img/efi/boot/* /tftpboot
 ```
  dhcp.conf filename “bootx64.efi”
+
+The following steps are the same for openSUSE and SUSE Linux Enterprise:
+
+#> mount -o loop openSUSE-Leap-15.0-DVD-x86_64.iso /mnt
+#> cp /mnt/EFI/BOOT/{bootx64.efi,grub.efi,grub.cfg} /srv/tftpboot/
+#> cp -r /mnt/boot /srv/tftpboot/
+To run a full network installation we also need to provide the ISO image content. A simple way to do this is via HTTP. Just create an installation sub-directory with the full content of the ISO image. Best practice is to mount the ISO image inside the web server environment.
+
+The 'Installation' menu-entry inside the grub.cfg file can then be extended with the netsetup= and install= parameters. Simply extend the linuxefi line with the following string:
+
+netsetup=dhcp,all install=http://192.168.7.1/install/opensuse/leap150/
+We can also customize the boot menu theme by editing the boot/x86_64/grub2-efi/themes/openSUSE/theme.txt file. In this example we will edit the theme title that is shown during boot.
+ 
+https://www.suse.com/c/multi-pxe-install-server/
