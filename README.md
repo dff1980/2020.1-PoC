@@ -140,4 +140,10 @@ systemctl restart nginx
 
 Change /usr/share/rmt/public/autoyast/autoinst_caasp.xml <ntp_server><address>
 
-
+### EFI boot loader PXE
+```
+mkdir /tmp/efi-img
+mount –t vfat /media/<name of disc>/boot/x86_64/efi /tmp/efi-img
+cp /tmp/efi-img/efi/boot/* /tftpboot
+```
+ dhcp.conf filename “bootx64.efi”
