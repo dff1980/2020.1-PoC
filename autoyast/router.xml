@@ -756,6 +756,7 @@ systemctl restart dhcpd.service
       <enable config:type="list">
         <service>dhcpd</service>
         <service>named</service>
+        <service>sshd</service>
       </enable>
       <on_demand config:type="list">
         <listentry>iscsid</listentry>
