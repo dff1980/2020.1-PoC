@@ -82,3 +82,62 @@ repos=$(rmt-cli repos list --all); for REPO in SLE-Product-SLES15-SP1-{Pool,Upda
 
 rmt-cli mirror 
 ```
+#### 2. Get autoyast
+```bash
+sudo SUSEConnect -p sle-module-containers/15.1/x86_64
+sudo SUSEConnect -p caasp/4.0/x86_64 -r {Registarion Key}
+sudo zypper in -t pattern SUSE-CaaSP-Management
+```
+/usr/share/caasp/autoyast/bare-metal/autoyast.xml
+
+```bash
+mkdir /usr/share/rmt/public/autoyast
+cp /usr/share/caasp/autoyast/bare-metal/autoyast.xml /usr/share/rmt/public/autoyast/autoinst_caasp.xml
+```
+
+```bash
+cd /usr/share/rmt/public/
+chown -R _rmt:nginx autoyast
+```
+get AutoYast Fingerprint
+
+```bash
+openssl x509 -noout -fingerprint -sha256 -inform pem -in /etc/rmt/ssl/rmt-ca.crt
+```
+Change /usr/share/rmt/public/autoyast/autoinst_caasp.xml <suse_register> (<reg_server>, <reg_server_cert_fingerprint>)
+
+  <!-- register -->
+  <suse_register>
+    <do_registration config:type="boolean">true</do_registration>
+    <install_updates config:type="boolean">true</install_updates>
+    <slp_discovery config:type="boolean">false</slp_discovery>
+      <reg_server>https://YOU FQDN</reg_server>
+      <reg_server_cert_fingerprint_type>SHA256</reg_server_cert_fingerprint_type>
+      <reg_server_cert_fingerprint>YOUR SMT FINGERPRINT</reg_server_cert_fingerprint>
+    <addons config:type="list">
+      <addon>
+        <name>sle-module-containers</name>
+        <version>15.1</version>
+        <arch>x86_64</arch>
+      </addon>
+      <addon>
+        <name>caasp</name>
+        <version>4.0</version>
+        <arch>x86_64</arch>
+      </addon>
+    </addons>
+  </suse_register>
+  
+Add to /etc/nginx/vhosts.d/rmt-server-http.conf
+```
+    location /autoyast {
+        autoindex on;
+    }
+```
+```bash
+systemctl restart nginx
+```
+
+Change /usr/share/rmt/public/autoyast/autoinst_caasp.xml <ntp_server><address>
+
+
