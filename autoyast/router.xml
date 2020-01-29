@@ -777,6 +777,11 @@ systemctl restart dhcpd.service
     </packages>
     <patterns config:type="list">
       <pattern>dhcp_dns_server</pattern>
+      <pattern>base</pattern>
+      <pattern>basesystem</pattern>
+      <pattern>enhanced_base</pattern>
+      <pattern>minimal_base</pattern>
+      <pattern>yast2_basis</pattern>
     </patterns>
     <products config:type="list">
       <product>SLES</product>
