@@ -55,7 +55,6 @@ prompt 0
 timeout 50
 
 menu title PXE Install Server
-menu background background.jpg
 
 label harddisk
   menu label Local Hard Disk
