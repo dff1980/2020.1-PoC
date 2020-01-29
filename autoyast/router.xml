@@ -7,8 +7,8 @@ Local Net "192.168.17"
 in-addr_arpa "17.168.192"
 WAN DNS Server "8.8.8.8"
 root password "susesuse"
-eth0 MAC "00:50:56:b2:3a:1c"
-eth1 MAC "00:50:56:b2:d7:6a"
+eth0 MAC "00:50:56:b2:00:01"
+eth1 MAC "00:50:56:b2:00:02"
 Master Node MAC "00:50:56:b2:e6:98"
 Worker-01 Node MAC "00:50:56:b2:e8:eb"
 Worker-02 Node MAC "00:50:56:b2:a1:f6"
@@ -86,7 +86,27 @@ systemctl restart dhcpd.service
     </global>
   </bootloader>
   <general>
-    <ask-list config:type="list"/>
+    <ask-list config:type="list">
+	<ask>
+      <pathlist config:type="list">
+        <path>networking,net-udev,0,rule,value</path>
+      </pathlist>
+      <question>Router eth0 MAC</question>
+      <type>string</type>
+	        <stage>initial</stage>
+      <default>00:50:56:b2:00:01</default>	  
+    </ask>
+	<ask>
+      <pathlist config:type="list">
+        <path>networking,net-udev,1,rule,value</path>
+      </pathlist>
+      <question>Router eth1 MAC</question>
+      <type>string</type>
+	        <stage>initial</stage>
+      <default>00:50:56:b2:00:02</default>	  
+    </ask>	
+  </ask-list>
+    <!--<ask-list config:type="list"/>-->
     <mode>
       <confirm config:type="boolean">false</confirm>
     </mode>
@@ -184,12 +204,12 @@ systemctl restart dhcpd.service
       <rule>
         <name>eth0</name>
         <rule>ATTR{address}</rule>
-        <value>00:50:56:b2:3a:1c</value>
+        <value>00:50:56:b2:00:01</value>
       </rule>
       <rule>
         <name>eth1</name>
         <rule>ATTR{address}</rule>
-        <value>00:50:56:b2:d7:6a</value>
+        <value>00:50:56:b2:00:02</value>
       </rule>
     </net-udev>
     <routing>
@@ -761,6 +781,6 @@ systemctl restart dhcpd.service
     <products config:type="list">
       <product>SLES</product>
     </products>
-  </software>
+  </software> 
  
 </profile>
