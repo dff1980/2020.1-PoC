@@ -56,10 +56,12 @@ Infrastructure server also connects to WAN.
 You can use AutoYaST file to setup router and pre-configure Chrone, DNS and DHCP server, PXE, TFTP
 Boot from SLES15 SP1 DVD.
 
-On GRUB boot screen select install and press "e"/
+On GRUB boot screen select install and press "e".
 
 Add to kernel parameters (in line started linuxefi, after splash=silent):
 ```
 netsetup=1 autoyast=https://raw.githubusercontent.com/dff1980/2020.1-PoC/master/autoyast/router.xml
 ```
+press "F10"
+
 After boot please register system
