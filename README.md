@@ -171,6 +171,7 @@ https://www.suse.com/c/secure-boot-net-install/
 
 ### Deploy SUSE CaaS Platform
 add 127.0.0.1 to /etc/resolve.conf
+configure NAT
 ```
 eval "$(ssh-agent)"
 ssh-add ~/.ssh/id_rsa
