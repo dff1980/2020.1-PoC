@@ -88,7 +88,6 @@ sudo SUSEConnect -p sle-module-containers/15.1/x86_64
 sudo SUSEConnect -p caasp/4.0/x86_64 -r {Registarion Key}
 sudo zypper in -t pattern SUSE-CaaSP-Management
 ```
-/usr/share/caasp/autoyast/bare-metal/autoyast.xml
 
 ```bash
 mkdir /usr/share/rmt/public/autoyast
@@ -139,6 +138,11 @@ systemctl restart nginx
 ```
 
 Change /usr/share/rmt/public/autoyast/autoinst_caasp.xml <ntp_server><address>
+Change /usr/share/rmt/public/autoyast/autoinst_caasp.xml <ntp-client><ntp_servers><ntp_server><address>
+
+use `ssh-keygen` for generate ssh key pair
+cat /root/.ssh/id_rsa.pub
+Change /usr/share/rmt/public/autoyast/autoinst_caasp.xml <users><user><username>sles</username><authorized_keys config:type="list"> <authorized_key>
 
 ### EFI boot loader PXE
 ```
