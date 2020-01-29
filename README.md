@@ -167,3 +167,17 @@ netsetup=dhcp,all install=http://192.168.7.1/install/opensuse/leap150/
 We can also customize the boot menu theme by editing the boot/x86_64/grub2-efi/themes/openSUSE/theme.txt file. In this example we will edit the theme title that is shown during boot.
  
 https://www.suse.com/c/multi-pxe-install-server/
+https://www.suse.com/c/secure-boot-net-install/
+
+### Deploy SUSE CaaS Platform
+
+```
+eval "$(ssh-agent)"
+ssh-add ~/.ssh/id_rsa
+```
+```
+skuba cluster init --control-plane 192.168.17.10 my-cluster
+cd my-cluster
+skuba node bootstrap --user sles --sudo --target master.caasp.local master
+```
+
