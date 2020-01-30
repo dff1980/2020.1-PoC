@@ -211,4 +211,5 @@ kubectl apply -f cluster.yaml
 kubectl get pods --namespace rook-ceph
 kubectl create -f object.yaml
 kubectl -n rook-ceph get pod -l app=rook-ceph-rgw
+kubectl create -f object-user.yaml
 ```
