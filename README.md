@@ -199,3 +199,13 @@ sudo zypper in kubernetes-client
 mkdir -p ~/.kube
 cp admin.conf ~/.kube/config
 ```
+### Deploy SES
+```
+SUSEConnect --product ses/6/x86_64 -r {Registration Key}
+zypper install rook-k8s-yaml
+cp -r /usr/share/k8s-yaml /root/
+cd /root/k8s-yaml/rook/ceph
+kubectl apply -f common.yaml -f operator.yaml
+kubectl get pods -n rook-ceph
+kubectl apply -f cluster.yaml
+```
