@@ -208,4 +208,5 @@ cd /root/k8s-yaml/rook/ceph
 kubectl apply -f common.yaml -f operator.yaml
 kubectl get pods -n rook-ceph
 kubectl apply -f cluster.yaml
+kubectl get pods --namespace rook-ceph
 ```
