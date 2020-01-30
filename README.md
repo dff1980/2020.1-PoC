@@ -212,4 +212,6 @@ kubectl get pods --namespace rook-ceph
 kubectl create -f object.yaml
 kubectl -n rook-ceph get pod -l app=rook-ceph-rgw
 kubectl create -f object-user.yaml
+kubectl -n rook-ceph get secret rook-ceph-object-user-my-store-my-user -o yaml | grep AccessKey | awk '{print $2}' | base64 --decode
+kubectl -n rook-ceph get secret rook-ceph-object-user-my-store-my-user -o yaml | grep SecretKey | awk '{print $2}' | base64 --decode
 ```
