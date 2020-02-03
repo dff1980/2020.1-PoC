@@ -215,3 +215,11 @@ kubectl create -f object-user.yaml
 kubectl -n rook-ceph get secret rook-ceph-object-user-my-store-my-user -o yaml | grep AccessKey | awk '{print $2}' | base64 --decode
 kubectl -n rook-ceph get secret rook-ceph-object-user-my-store-my-user -o yaml | grep SecretKey | awk '{print $2}' | base64 --decode
 ```
+
+
+### firewalld
+firewall-cmd --list-all --zone=external
+firewall-cmd --permanent --zone=external --add-masquerade
+firewall-cmd --permanent --zone=external --add-forward-port=port=30000-40000:proto=tcp:toaddr=192.168.17.10
+firewall-cmd --reload
+firewall-cmd --list-all --zone=external
