@@ -1,0 +1,14 @@
+$TTL 2D
+@		IN SOA		router.caasp.suse.ru.	root.router.caasp.suse.ru. (
+				2019031800	; serial
+				3H		; refresh
+				1H		; retry
+				1W		; expiry
+				1D )		; minimum
+
+17.168.192.in-addr.arpa.	IN NS		ses6.suse.ru.
+10.17.168.192.in-addr.arpa.	IN PTR		master.caasp.suse.ru.
+11.17.168.192.in-addr.arpa.	IN PTR		worker-01.caasp.suse.ru.
+12.17.168.192.in-addr.arpa.	IN PTR		worker-02.caasp.suse.ru.
+13.17.168.192.in-addr.arpa.	IN PTR		worker-03.caasp.suse.ru.
+14.17.168.192.in-addr.arpa.	IN PTR		worker-04.caasp.suse.ru.
