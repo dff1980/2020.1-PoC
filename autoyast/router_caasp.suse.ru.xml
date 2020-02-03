@@ -411,17 +411,57 @@ systemctl restart dhcpd.service
             <type>directive</type>
             <value>192.168.17.254</value>
           </listentry>
-          <listentry>
-            <key>filename</key>
-            <type>directive</type>
-            <value>"pxelinux.0"</value>
-          </listentry>
         </directives>
         <id>192.168.17.0 netmask 255.255.255.0</id>
         <options config:type="list"/>
         <parent_id/>
         <parent_type/>
         <type>subnet</type>
+      </settings_entry>
+      <settings_entry>
+        <children config:type="list"/>
+        <directives config:type="list">
+          <listentry>
+            <key>filename</key>
+            <type>directive</type>
+            <value>"/EFI/x86/bootx64.efi"</value>
+          </listentry>
+        </directives>
+        <id>option arch = 00:07 or option arch = 00:09</id>
+        <options config:type="list"/>
+        <parent_id>192.168.17.0 netmask 255.255.255.0</parent_id>
+        <parent_type>subnet</parent_type>
+        <type>if</type>
+      </settings_entry>
+      <settings_entry>
+        <children config:type="list"/>
+        <directives config:type="list">
+          <listentry>
+            <key>filename</key>
+            <type>directive</type>
+            <value>"/EFI/armv8/bootaa64.efi"</value>
+          </listentry>
+        </directives>
+        <id>if option arch = 00:0b</id>
+        <options config:type="list"/>
+        <parent_id>192.168.17.0 netmask 255.255.255.0</parent_id>
+        <parent_type>subnet</parent_type>
+        <type>else</type>
+      </settings_entry>
+      <settings_entry>
+        <children config:type="list"/>
+        <directives config:type="list">
+          <listentry>
+            <key>filename</key>
+            <type>directive</type>
+            <value>"/bios/x86/pxelinux.0"</value>
+          </listentry>
+        </directives>
+        <id/>
+        <options config:type="list"/>
+        <parent_id>192.168.17.0 netmask 255.255.255.0</parent_id>
+        <parent_type>subnet</parent_type>
+        <type>else</type>
       </settings_entry>
       <settings_entry>
         <children config:type="list">
@@ -750,5 +790,4 @@ systemctl restart dhcpd.service
       <product>SLES</product>
     </products>
   </software> 
- 
 </profile>
