@@ -35,8 +35,8 @@ label harddisk
 
 label install-caasp-node
   menu label CaaSP Node
-  kernel linux
-  append load ramdisk=1 initrd=initrd netsetup=dhcp install=http://router.caasp.suse.ru/repo/SUSE/Install/x86/SLE-SERVER/15-SP1/ autoyast=http://router.caasp.suse.ru/autoyast/autoinst_caasp.xml
+  kernel /bios/x86/linux
+  append load ramdisk=1 initrd=/bios/x86/initrd netsetup=dhcp install=http://router.caasp.suse.ru/repo/SUSE/Install/x86/SLE-SERVER/15-SP1/ autoyast=http://router.caasp.suse.ru/autoyast/autoinst_caasp.xml
 
 EOF
 
@@ -44,9 +44,9 @@ EOF
 cp ${X86_INSTALL_DIR}/EFI/BOOT/{bootx64.efi,grub.efi,MokManager.efi} /srv/tftpboot/EFI/x86/
 cp ${X86_INSTALL_DIR}/boot/x86_64/loader/{linux,initrd} /srv/tftpboot/EFI/x86/boot
 
-cat << EOF > /srv/tftpboot/EFI/x86/boot/grub.cfg
+cat << EOF > /srv/tftpboot/EFI/x86/grub.cfg
 
-  timeout=60
+timeout=60
 
 default=0
 
@@ -56,8 +56,8 @@ menuentry "Boot from Hard Disk" {
 }
 
 menuentry 'CaaSP Node Installation' {
-  linuxefi /boot/x86_64/loader/linux splash=silent netsetup=dhcp install=http://router.caasp.suse.ru/repo/SUSE/Install/x86/SLE-SERVER/15-SP1/ autoyast=http://router.caasp.suse.ru/autoyast/autoinst_caasp.xml
-  initrdefi /boot/x86_64/loader/initrd
+  linuxefi /EFI/x86/boot/linux splash=silent netsetup=dhcp install=http://router.caasp.suse.ru/repo/SUSE/Install/x86/SLE-SERVER/15-SP1/ autoyast=http://router.caasp.suse.ru/autoyast/autoinst_caasp.xml
+  initrdefi /EFI/x86/boot/initrd
 }
 
 EOF
