@@ -35,8 +35,8 @@ label harddisk
 
 label install-caasp-node
   menu label CaaSP Node
-  kernel /bios/x86/linux
-  append load ramdisk=1 initrd=/bios/x86/initrd netsetup=dhcp install=http://router.caasp.suse.ru/repo/SUSE/Install/x86/SLE-SERVER/15-SP1/ autoyast=http://router.caasp.suse.ru/autoyast/autoinst_caasp.xml
+  kernel linux
+  append load ramdisk=1 initrd=initrd netsetup=dhcp install=http://router.caasp.suse.ru/repo/SUSE/Install/x86/SLE-SERVER/15-SP1/ autoyast=http://router.caasp.suse.ru/autoyast/autoinst_caasp.xml
 
 EOF
 

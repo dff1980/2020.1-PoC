@@ -245,8 +245,6 @@ systemctl restart dhcpd.service
       <disable config:type="list"/>
       <enable config:type="list">
         <service>sshd</service>
-        <service>dhcpd</service>
-        <service>named</service>
       </enable>
       <on_demand config:type="list">
         <listentry>iscsid</listentry>
