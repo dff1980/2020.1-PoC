@@ -65,7 +65,10 @@ netsetup=1 autoyast=https://raw.githubusercontent.com/dff1980/2020.1-PoC/master/
 press "F10"
 
 ## Configure Router
-
+```
+zypper in git-core
+git clone https://github.com/dff1980/2020.1-PoC/
+```
 #### 1. Configure RMT.
 ```bash
 sudo zypper in rmt-server
