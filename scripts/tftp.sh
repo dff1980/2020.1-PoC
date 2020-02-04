@@ -22,7 +22,7 @@ mkdir /srv/tftpboot/EFI/armv8/boot
 cp ${X86_INSTALL_DIR}/boot/x86_64/loader/{linux,initrd,message} /srv/tftpboot/bios/x86/
 cp /usr/share/syslinux/vesamenu.c32 /usr/share/syslinux/pxelinux.0 /srv/tftpboot/bios/x86/
 mkdir -p /srv/tftpboot/bios/x86/pxelinux.cfg
-cat << EOF >> /srv/tftpboot/bios/x86/pxelinux.cfg/default
+cat << EOF > /srv/tftpboot/bios/x86/pxelinux.cfg/default
 default vesamenu.c32
 prompt 0
 timeout 50
@@ -44,7 +44,7 @@ EOF
 cp ${X86_INSTALL_DIR}/EFI/BOOT/{bootx64.efi,grub.efi,MokManager.efi} /srv/tftpboot/EFI/x86/
 cp ${X86_INSTALL_DIR}/boot/x86_64/loader/{linux,initrd} /srv/tftpboot/EFI/x86/boot
 
-cat << EOF >> /srv/tftpboot/EFI/x86/boot/grub.cfg
+cat << EOF > /srv/tftpboot/EFI/x86/boot/grub.cfg
 
   timeout=60
 
