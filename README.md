@@ -75,7 +75,7 @@ sudo zypper in rmt-server
 ```
 Execute RMT configuration wizard. During the server certificate setup, all possible DNS for this server has been added (RMT FQDN, etc).
 ```
-yast
+yast rmt
 ```
 Add repositories to replication.
 ```bash
