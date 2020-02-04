@@ -30,13 +30,34 @@ $TTL 2D
 				1W		; expiry
 				1D )		; minimum
 
-17.168.192.in-addr.arpa.	IN NS		ses6.suse.ru.
+17.168.192.in-addr.arpa.	IN NS		caasp.suse.ru.
 10.17.168.192.in-addr.arpa.	IN PTR		master.caasp.suse.ru.
 11.17.168.192.in-addr.arpa.	IN PTR		worker-01.caasp.suse.ru.
 12.17.168.192.in-addr.arpa.	IN PTR		worker-02.caasp.suse.ru.
 13.17.168.192.in-addr.arpa.	IN PTR		worker-03.caasp.suse.ru.
 14.17.168.192.in-addr.arpa.	IN PTR		worker-04.caasp.suse.ru.
 EOF
+
+cat << EOF >> /etc/named.conf
+
+zone "caasp.suse.ru" in {
+        allow-transfer { any; };
+        file "master/caasp.suse.ru";
+        type master;
+};
+zone "17.168.192.in-addr.arpa" in {
+        file "master/17.168.192.in-addr.arpa";
+        type master;
+};
+
+EOF
+
+DATE=$(date +%Y%m%d%H)
+
+sed -i "s/[[:digit:]]\+\(\s*;\s*[sS]erial\)/$DATE\1/" /var/lib/named/master/caasp.suse.ru
+sed -i "s/[[:digit:]]\+\(\s*;\s*[sS]erial\)/$DATE\1/" /var/lib/named/master/17.168.192.in-addr.arpa
+
+
 
 systemctl enable named.service
 systemctl start  named.service

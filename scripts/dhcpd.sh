@@ -8,6 +8,7 @@ option domain-name "caasp.suse.ru";
 option domain-name-servers 192.168.17.254, 8.8.8.8;
 option routers 192.168.17.254;
 option ntp-servers 192.168.17.254;
+option arch code 93 = unsigned integer 16; # RFC4578
 default-lease-time 14400;
 ddns-update-style none;
 subnet 192.168.17.0 netmask 255.255.255.0 {
