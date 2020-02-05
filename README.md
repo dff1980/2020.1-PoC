@@ -80,6 +80,7 @@ yast rmt
 Add repositories to replication.
 ```bash
 ./rmt-mirror.sh
+rmt-cli mirror
 ```
 #### 2. Get autoyast
 ```bash
@@ -126,7 +127,7 @@ Change /usr/share/rmt/public/autoyast/autoinst_caasp.xml <suse_register> (<reg_s
     </addons>
   </suse_register>
 ```  
-Add to /etc/nginx/vhosts.d/rmt-server-http.conf
+Add to /etc/nginx/vhosts.d/rmt-server-http.conf and rmt-server-https.conf
 ```
     location /autoyast {
         autoindex on;
@@ -136,7 +137,6 @@ Add to /etc/nginx/vhosts.d/rmt-server-http.conf
 systemctl restart nginx
 ```
 
-Change /usr/share/rmt/public/autoyast/autoinst_caasp.xml `<ntp_server><address>`
 Change /usr/share/rmt/public/autoyast/autoinst_caasp.xml `<ntp-client><ntp_servers><ntp_server><address>`
 
 use `ssh-keygen` for generate ssh key pair
