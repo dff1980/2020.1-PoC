@@ -133,7 +133,10 @@ mkdir -p ~/.kube
 cp admin.conf ~/.kube/config
 ```
 ### Deploy SES
-Wipe data on all worker Nodes
+Wipe data on all non-system disk at all Worker Nodes
+```
+./wipe_OSD.sh
+```
 ```
 SUSEConnect --product ses/6/x86_64 -r {Registration Key}
 zypper install rook-k8s-yaml
