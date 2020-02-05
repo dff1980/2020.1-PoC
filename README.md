@@ -98,10 +98,26 @@ autoyast.sh
 ```
 ./named.sh
 ```
+#### 6. Configure Firewall
+```
+./firewall.sh
+```
 
 ### Deploy SUSE CaaS Platform
-Use PXE boot to install all nodes
+#### 1.
 ```
+sudo SUSEConnect -p sle-module-containers/15.1/x86_64
+sudo SUSEConnect -p caasp/4.0/x86_64 -r {Registarion Key}
+sudo zypper in -t pattern SUSE-CaaSP-Management
+```
+#### 2.
+Use PXE boot to install all nodes
+Clear all unused HDD on worker Nodes
+
+#### 3.
+```
+eval "$(ssh-agent)"
+ssh-add ~/.ssh/id_rsa
 skuba cluster init --control-plane 192.168.17.10 my-cluster
 cd my-cluster
 skuba node bootstrap --user sles --sudo --target master.caasp.local master
@@ -133,11 +149,13 @@ kubectl -n rook-ceph get secret rook-ceph-object-user-my-store-my-user -o yaml |
 kubectl -n rook-ceph get secret rook-ceph-object-user-my-store-my-user -o yaml | grep SecretKey | awk '{print $2}' | base64 --decode
 kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath="{['data']['password']}" | base64 --decode && echo
 ```
+
+#### Appendix Node port
 Set NodePort
 ```
 kubectl -n rook-ceph edit service rook-ceph-mgr-dashboard
 ```
-### firewalld
+### Appendix firewalld Node port
 ```
 firewall-cmd --list-all --zone=external
 firewall-cmd --permanent --zone=external --add-masquerade
