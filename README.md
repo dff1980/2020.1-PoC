@@ -100,7 +100,7 @@ autoyast.sh
 ```
 
 ### Deploy SUSE CaaS Platform
-
+Use PXE boot to install all nodes
 ```
 skuba cluster init --control-plane 192.168.17.10 my-cluster
 cd my-cluster
