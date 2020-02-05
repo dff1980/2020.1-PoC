@@ -133,6 +133,7 @@ mkdir -p ~/.kube
 cp admin.conf ~/.kube/config
 ```
 ### Deploy SES
+Wipe data on all worker Nodes
 ```
 SUSEConnect --product ses/6/x86_64 -r {Registration Key}
 zypper install rook-k8s-yaml
@@ -149,6 +150,8 @@ kubectl -n rook-ceph get secret rook-ceph-object-user-my-store-my-user -o yaml |
 kubectl -n rook-ceph get secret rook-ceph-object-user-my-store-my-user -o yaml | grep SecretKey | awk '{print $2}' | base64 --decode
 kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath="{['data']['password']}" | base64 --decode && echo
 ```
+
+### Remove SES
 
 #### Appendix Node port
 Set NodePort
