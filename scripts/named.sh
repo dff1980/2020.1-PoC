@@ -38,6 +38,8 @@ $TTL 2D
 14.17.168.192.in-addr.arpa.	IN PTR		worker-04.caasp.suse.ru.
 EOF
 
+if ! grep 'zone "caasp.suse.ru"' /etc/named.conf
+ then
 cat << EOF >> /etc/named.conf
 
 zone "caasp.suse.ru" in {
@@ -45,12 +47,20 @@ zone "caasp.suse.ru" in {
         file "master/caasp.suse.ru";
         type master;
 };
+EOF
+ fi
+
+if ! grep 'zone "17.168.192.in-addr.arpa"' /etc/named.conf
+then
+cat << EOF >> /etc/named.conf
+
 zone "17.168.192.in-addr.arpa" in {
         file "master/17.168.192.in-addr.arpa";
         type master;
 };
 
 EOF
+ fi
 
 DATE=$(date +%Y%m%d%H)
 
@@ -61,3 +71,8 @@ sed -i "s/[[:digit:]]\+\(\s*;\s*[sS]erial\)/$DATE\1/" /var/lib/named/master/17.1
 
 systemctl enable named.service
 systemctl start  named.service
+
+if ! grep "127.0.0.1" /run/netconfig/resolv.conf
+ then
+  sed -i '/^nameserver/i nameserver 127.0.0.1' /run/netconfig/resolv.conf
+ fi

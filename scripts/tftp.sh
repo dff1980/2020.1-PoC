@@ -25,7 +25,7 @@ mkdir -p /srv/tftpboot/bios/x86/pxelinux.cfg
 cat << EOF > /srv/tftpboot/bios/x86/pxelinux.cfg/default
 default vesamenu.c32
 prompt 0
-timeout 50
+timeout 15
 
 menu title PXE Install Server
 
@@ -46,7 +46,7 @@ cp ${X86_INSTALL_DIR}/boot/x86_64/loader/{linux,initrd} /srv/tftpboot/EFI/x86/bo
 
 cat << EOF > /srv/tftpboot/EFI/x86/grub.cfg
 
-timeout=60
+timeout=15
 
 default=0
 
