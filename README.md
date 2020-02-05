@@ -155,6 +155,14 @@ kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath="{['dat
 ```
 
 ### Remove SES
+```
+kubectl delete -f object-user.yaml
+kubectl delete -f object.yaml
+kubectl delete -f cluster.yaml
+kubectl delete -f operator.yaml
+kubectl delete -f common.yaml
+rm -rf /var/lib/rook
+```
 
 #### Appendix Node port
 Set NodePort
