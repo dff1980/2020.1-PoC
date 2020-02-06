@@ -196,7 +196,7 @@ To delete failed tiller from a kubernetes cluster:
 helm reset --force
 ```
 
-##### NGINX Ingress Controller REPORT DOCUMENTATION BUG#
+##### NGINX Ingress Controller
 Configure and deploy NGINX ingress controller
 
 NodePort: The services will be publicly exposed on each node of the cluster, including master nodes, at port 30443 for HTTPS.
@@ -231,6 +231,17 @@ The result should be two running pods:
 ```
 kubectl -n nginx-ingress get pod
 ```
+##### Dashboard
+```
+helm install stable/kubernetes-dashboard --namespace=kube-system --name=kubernetes-dashboard
+```
+Get the Kubernetes Dashboard URL by running:
+```
+  export POD_NAME=$(kubectl get pods -n default -l "app=kubernetes-dashboard,release=opining-grasshopper" -o jsonpath="{.items[0].metadata.name}")
+  echo https://127.0.0.1:8443/
+  kubectl -n default port-forward $POD_NAME 8443:8443
+```
+
 
 #### Appendix Node port
 Set NodePort
