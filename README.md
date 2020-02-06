@@ -257,5 +257,10 @@ firewall-cmd --reload
 firewall-cmd --list-all --zone=external
 ```
 
+#######
+delete nginx-ingress
+```
+helm delete nginx-ingress --purge
+```
 
 kubectl describe SomeThing
