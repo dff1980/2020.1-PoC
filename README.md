@@ -170,7 +170,7 @@ kubectl delete -f common.yaml
 rm -rf /var/lib/rook
 ```
 
-#### Appendix K8S Staff
+#### Appendix K8S Stuff
 Unsecured Tiller Deployment
 This will install Tiller without additional certificate security.
 ```
@@ -183,7 +183,10 @@ kubectl create clusterrolebinding tiller \
 helm init \
     --tiller-image registry.suse.com/caasp/v4/helm-tiller:2.16.1 \
     --service-account tiller
+
+helm repo add suse https://kubernetes-charts.suse.com
 ```
+
 To uninstall tiller from a kubernetes cluster:
 ```
 helm reset
@@ -193,7 +196,41 @@ To delete failed tiller from a kubernetes cluster:
 helm reset --force
 ```
 
+##### NGINX Ingress Controller REPORT DOCUMENTATION BUG#
+Configure and deploy NGINX ingress controller
 
+NodePort: The services will be publicly exposed on each node of the cluster, including master nodes, at port 30443 for HTTPS.
+```
+# Enable the creation of pod security policy
+podSecurityPolicy:
+  enabled: false
+
+# Create a specific service account
+serviceAccount:
+  create: true
+  name: nginx-ingress
+
+# Publish services on port HTTPS/30443
+# These services are exposed on each node
+controller:
+  service:
+    enableHttp: false
+    type: NodePort
+    nodePorts:
+      https: 30443
+```
+Deploy the helm chart from the $suse charts repository and pass along our configuration values file.
+```
+kubectl create namespace nginx-ingress
+
+helm install --name nginx-ingress suse/nginx-ingress \
+--namespace nginx-ingress \
+--values nginx-ingress-config-values.yaml
+```
+The result should be two running pods:
+```
+kubectl -n nginx-ingress get pod
+```
 
 #### Appendix Node port
 Set NodePort
