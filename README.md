@@ -256,3 +256,6 @@ firewall-cmd --permanent --zone=external --add-forward-port=port=30000-40000:pro
 firewall-cmd --reload
 firewall-cmd --list-all --zone=external
 ```
+
+
+kubectl describe SomeThing
