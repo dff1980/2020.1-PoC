@@ -170,6 +170,31 @@ kubectl delete -f common.yaml
 rm -rf /var/lib/rook
 ```
 
+#### Appendix K8S Staff
+Unsecured Tiller Deployment
+This will install Tiller without additional certificate security.
+```
+kubectl create serviceaccount --namespace kube-system tiller
+
+kubectl create clusterrolebinding tiller \
+    --clusterrole=cluster-admin \
+    --serviceaccount=kube-system:tiller
+
+helm init \
+    --tiller-image registry.suse.com/caasp/v4/helm-tiller:2.16.1 \
+    --service-account tiller
+```
+To uninstall tiller from a kubernetes cluster:
+```
+helm reset
+```
+To delete failed tiller from a kubernetes cluster:
+```
+helm reset --force
+```
+
+
+
 #### Appendix Node port
 Set NodePort
 ```
