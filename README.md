@@ -247,6 +247,7 @@ Get the Kubernetes Dashboard URL by running:
 Set NodePort
 ```
 kubectl -n rook-ceph edit service rook-ceph-mgr-dashboard
+kubectl -n kube-system edit service kubernetes-dashboard
 ```
 ### Appendix firewalld Node port
 ```
@@ -312,4 +313,6 @@ If TLS is enabled for the Ingress, a Secret containing the certificate and key m
     tls.key: <base64 encoded key>
   type: kubernetes.io/tls
 
+
+kubectl get ingress --all-namespaces
 
