@@ -252,7 +252,13 @@ Go Dashboard. If "Not Found (404)" at login fast select some menu items.
 Delete Dashboard
 ```
 helm delete --purge kubernetes-dashboard
+kubectl delete -f admin-user.yaml
 ```
+Dashboard 2.0
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta1/aio/deploy/recommended.yaml
+```
+
 #### Appendix Node port
 Set NodePort
 ```
