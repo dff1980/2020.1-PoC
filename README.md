@@ -266,6 +266,16 @@ kubectl apply -f admin-user_dashboard_2.yaml
 kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
 ```
 [[http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/]]
+
+Install metric-server
+```
+helm install --name metrics-server stable/metrics-server --namespace metrics --set args={"--kubelet-insecure-tls=true, --kubelet-preferred-address-types=InternalIP\,Hostname\,ExternalIP"}
+```
+```
+kubectl top node
+kubectl top pod
+kubectl top pods -n kube-system
+```
 #### Appendix Node port
 Set NodePort
 ```
