@@ -258,7 +258,14 @@ Dashboard 2.0
 ```
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta1/aio/deploy/recommended.yaml
 ```
-
+Create Service Account
+```
+kubectl apply -f admin-user_dashboard_2.yaml
+```
+```
+kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
+```
+[[http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/]]
 #### Appendix Node port
 Set NodePort
 ```
