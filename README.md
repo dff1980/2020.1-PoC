@@ -159,7 +159,10 @@ kubectl -n rook-ceph get secret rook-ceph-object-user-my-store-my-user -o yaml |
 kubectl -n rook-ceph get secret rook-ceph-object-user-my-store-my-user -o yaml | grep SecretKey | awk '{print $2}' | base64 --decode
 kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath="{['data']['password']}" | base64 --decode && echo
 ```
-
+Set NodePort
+```
+kubectl -n rook-ceph edit service rook-ceph-mgr-dashboard
+```
 ### Remove SES
 ```
 kubectl delete -f object-user.yaml
@@ -235,19 +238,25 @@ kubectl -n nginx-ingress get pod
 ```
 helm install stable/kubernetes-dashboard --namespace=kube-system --name=kubernetes-dashboard
 ```
-Get the Kubernetes Dashboard URL by running:
+Create Service Account
 ```
-  export POD_NAME=$(kubectl get pods -n default -l "app=kubernetes-dashboard,release=opining-grasshopper" -o jsonpath="{.items[0].metadata.name}")
-  echo https://127.0.0.1:8443/
-  kubectl -n default port-forward $POD_NAME 8443:8443
+kubectl apply -f admin-user.yaml
 ```
+Get token
+```
+kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
+```
+kubectl proxy
+Go Dashboard. If "Not Found (404)" at login fast select some menu items.
 
-
+Delete Dashboard
+```
+helm delete --purge kubernetes-dashboard
+```
 #### Appendix Node port
 Set NodePort
 ```
 kubectl -n rook-ceph edit service rook-ceph-mgr-dashboard
-kubectl -n kube-system edit service kubernetes-dashboard
 ```
 ### Appendix firewalld Node port
 ```
