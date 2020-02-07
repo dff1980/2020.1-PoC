@@ -118,8 +118,8 @@ Clear all unused HDD on worker Nodes
 ```
 eval "$(ssh-agent)"
 ssh-add ~/.ssh/id_rsa
-skuba cluster init --control-plane 192.168.17.10 my-cluster
-cd my-cluster
+skuba cluster init --control-plane caasp.local caasp-cluster
+cd caasp-cluster
 skuba node bootstrap --user sles --sudo --target master.caasp.local master
 skuba node join --role worker --user sles --sudo --target worker-01.caasp.local worker-01
 skuba node join --role worker --user sles --sudo --target worker-02.caasp.local worker-02
