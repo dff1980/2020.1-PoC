@@ -348,3 +348,94 @@ If TLS is enabled for the Ingress, a Secret containing the certificate and key m
 
 kubectl get ingress --all-namespaces
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Install CLI CF (cf, the Cloud Foundry command line interface.)
+```
+SUSEConnect --product sle-module-cap-tools/15.1/x86_64
+zypper install cf-cli
+```
+On all worker node:
+Swapaccounting is enabled on all worker nodes. For each node:
+SSH into the node.
+```
+eval "$(ssh-agent)"
+ssh-add ~/.ssh/id_rsa
+```
+Enable swapaccounting on the node.
+```
+grep "swapaccount=1" /etc/default/grub || sudo sed -i -r 's|^(GRUB_CMDLINE_LINUX_DEFAULT=)\"(.*.)\"|\1\"\2 swapaccount=1 \"|' /etc/default/grub
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+sudo systemctl reboot
+```
+Add Storage Class (CEPHFS)
+```
+kubectl apply -f filesystem.yaml
+kubectl apply -f storageclass.yaml
+```
+```
+helm install suse/uaa --name susecf-uaa --namespace uaa --values scf-config-values.yaml
+```
+
+```
+SECRET=$(kubectl get pods --namespace uaa --output jsonpath='{.items[?(.metadata.name=="uaa-0")].spec.containers[?(.name=="uaa")].env[?(.name=="INTERNAL_CA_CERT")].valueFrom.secretKeyRef.name}')
+
+CA_CERT="$(kubectl get secret $SECRET --namespace uaa --output jsonpath="{.data['internal-ca-cert']}" | base64 --decode -)"                                                                                
+helm install suse/cf --name susecf-scf --namespace scf --values scf-config-values.yaml --set "secrets.UAA_CA_CERT=${CA_CERT}"
+```
+
+
+NOTES:
+    Welcome to your new deployment of SCF.
+
+    The endpoint for use by the `cf` client is
+        https://api.caasp.suse.ru
+
+    To target this endpoint and login, run
+        cf login --skip-ssl-validation -a https://api.caasp.suse.ru -u admin
+
+    Please remember, it may take some time for everything to come online.
+
+    You can use
+        kubectl get pods --namespace scf
+
+    to spot-check if everything is up and running, or
+        watch -c 'kubectl get pods --namespace scf'
+
+    to monitor continuously.
+
+    The online documentation (release notes, deployment guide) can be found at
+        https://www.suse.com/documentation/cloud-application-platform-1
+
+
+
+
+
+```
+kubectl get secret ceph-secret-admin --output json --namespace default | sed 's/"namespace": "default"/"namespace": "stratos"/' | kubectl create --filename -
+```
+
+
+
