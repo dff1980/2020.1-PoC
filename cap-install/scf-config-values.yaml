@@ -1,0 +1,33 @@
+### example deployment configuration file
+### scf-config-values.yaml
+
+env:
+  DOMAIN: cap.suse.ru
+  # the UAA prefix is required
+  UAA_HOST: uaa.cap.suse.ru
+  UAA_PORT: 2793
+  GARDEN_ROOTFS_DRIVER: "btrfs"
+
+kube:
+  external_ips: ["172.17.149.48","192.168.17.10"]
+
+  storage_class:
+    persistent: "rook-ceph-block"
+    shared: "shared"
+
+  registry:
+    hostname: "registry.suse.com"
+    username: ""
+    password: ""
+  organization: "cap"
+
+secrets:
+  # Create a very strong password for user 'admin'
+  CLUSTER_ADMIN_PASSWORD: susesuse
+
+  # Create a very strong password, and protect it because it
+  # provides root access to everything
+  UAA_ADMIN_CLIENT_SECRET: susesuse
+
+enable:
+  uaa: true

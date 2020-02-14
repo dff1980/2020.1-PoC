@@ -2,7 +2,7 @@
 systemctl stop named.service
 
 cat << EOF > /var/lib/named/master/caasp.suse.ru
-$TTL 2d
+\$TTL 2d
 @		IN SOA		router.caasp.suse.ru.	root.router.caasp.suse.ru. (
 				2019031800	; serial
 				3h		; refresh
@@ -14,6 +14,7 @@ caasp.suse.ru.	IN NS		ns.caasp.suse.ru.
 ns		IN A		192.168.17.254
 router		IN A		192.168.17.254
 ntp		IN A		192.168.17.254
+api		IN A		192.168.17.10
 master		IN A		192.168.17.10
 worker-01	IN A		192.168.17.11
 worker-02	IN A		192.168.17.12
@@ -21,8 +22,23 @@ worker-03	IN A		192.168.17.13
 worker-04	IN A		192.168.17.14
 EOF
 
+cat << EOF > /var/lib/named/master/cap.suse.ru
+\$TTL 2d
+@		IN SOA		router.cap.suse.ru.	root.router.cap.suse.ru. (
+				2020021417	; serial
+				3h		; refresh
+				1h		; retry
+				1w		; expiry
+				1d )		; minimum
+
+cap.suse.ru.	IN NS		ns.cap.suse.ru.
+ns		IN A		192.168.17.254
+@		IN A		192.168.17.10
+*		IN A		192.168.17.10
+EOF
+
 cat << EOF > /var/lib/named/master/17.168.192.in-addr.arpa
-$TTL 2D
+\$TTL 2D
 @		IN SOA		router.caasp.suse.ru.	root.router.caasp.suse.ru. (
 				2019031800	; serial
 				3H		; refresh
@@ -50,6 +66,19 @@ zone "caasp.suse.ru" in {
 EOF
  fi
 
+if ! grep 'zone "cap.suse.ru"' /etc/named.conf
+ then
+cat << EOF >> /etc/named.conf
+
+zone "cap.suse.ru" in {
+        allow-transfer { any; };
+        file "master/cap.suse.ru";
+        type master;
+};
+EOF
+ fi
+
+
 if ! grep 'zone "17.168.192.in-addr.arpa"' /etc/named.conf
 then
 cat << EOF >> /etc/named.conf
@@ -65,6 +94,7 @@ EOF
 DATE=$(date +%Y%m%d%H)
 
 sed -i "s/[[:digit:]]\+\(\s*;\s*[sS]erial\)/$DATE\1/" /var/lib/named/master/caasp.suse.ru
+sed -i "s/[[:digit:]]\+\(\s*;\s*[sS]erial\)/$DATE\1/" /var/lib/named/master/cap.suse.ru
 sed -i "s/[[:digit:]]\+\(\s*;\s*[sS]erial\)/$DATE\1/" /var/lib/named/master/17.168.192.in-addr.arpa
 
 

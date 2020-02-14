@@ -52,7 +52,13 @@ default=0
 
 # look for an installed SUSE system and boot it
 menuentry "Boot from Hard Disk" {
-        chainloader /efi/$os/grub.efi
+  if search --no-floppy --file /efi/boot/fallback.efi --set ; then
+    for os in opensuse sles caasp ; do
+      if [ -f /efi/\$os/grub.efi ] ; then
+        chainloader /efi/\$os/grub.efi
+      fi
+    done
+  fi
 }
 
 menuentry 'CaaSP Node Installation' {

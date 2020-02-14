@@ -1,0 +1,21 @@
+env:
+    # Domain for SCF. DNS for *.DOMAIN must point to the kube node's
+    # external ip. This must match the value passed to the
+    # cert-generator.sh script.
+    DOMAIN: 192.168.17.10.nip.io
+    UAA_HOST: uaa.192.168.17.10.nip.io
+    UAA_PORT: 2793
+
+kube:
+    # The IP address assigned to the kube node. The example value here
+    # is what the vagrant setup assigns
+    external_ips: 
+    - 192.168.17.10
+    storage_class:
+        persistent: cap-cephfs
+secrets:
+    # Password for the cluster
+    CLUSTER_ADMIN_PASSWORD: changeme
+
+    # Password for SCF to authenticate with UAA
+    UAA_ADMIN_CLIENT_SECRET: uaa-admin-client-secret

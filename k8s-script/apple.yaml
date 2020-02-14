@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: List
+items:
+  - apiVersion: v1
+    kind: Namespace
+    metadata:
+      name: apple
+      labels:
+        name: apple
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: apple-app
+      namespace: apple
+      labels:
+        name: apple-app
+        app: apple
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: apple
+      template:
+        metadata:
+          labels:
+            name: apple-app
+            app: apple
+        spec:
+          containers:
+            - name: apple-app
+              image: hashicorp/http-echo
+              args:
+                - "-text=apple"
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: apple-service
+      namespace: apple
+    spec:
+      selector:
+        app: apple
+      ports:
+        - name: app
+          port: 5678 # Default port for image
+
+  - apiVersion: extensions/v1beta1
+    kind: Ingress
+    metadata:
+      name: apple-ingress
+      namespace: apple
+      annotations:
+        ingress.kubernetes.io/rewrite-target: /
+    spec:
+      rules:
+      - host: caasp.suse.ru
+        http:
+          paths:
+            - path: /apple
+              backend:
+                serviceName: apple-service
+                servicePort: 5678
