@@ -98,12 +98,28 @@ autoyast.sh
 ```
 ./named.sh
 ```
+#### 6. Configure Firewall
+```
+./firewall.sh
+```
 
 ### Deploy SUSE CaaS Platform
-Use PXE boot to install all nodes
+#### 1.
 ```
-skuba cluster init --control-plane 192.168.17.10 my-cluster
-cd my-cluster
+sudo SUSEConnect -p sle-module-containers/15.1/x86_64
+sudo SUSEConnect -p caasp/4.0/x86_64 -r {Registarion Key}
+sudo zypper in -t pattern SUSE-CaaSP-Management
+```
+#### 2.
+Use PXE boot to install all nodes
+Clear all unused HDD on worker Nodes
+
+#### 3.
+```
+eval "$(ssh-agent)"
+ssh-add ~/.ssh/id_rsa
+skuba cluster init --control-plane caasp.local caasp-cluster
+cd caasp-cluster
 skuba node bootstrap --user sles --sudo --target master.caasp.local master
 skuba node join --role worker --user sles --sudo --target worker-01.caasp.local worker-01
 skuba node join --role worker --user sles --sudo --target worker-02.caasp.local worker-02
@@ -117,6 +133,10 @@ mkdir -p ~/.kube
 cp admin.conf ~/.kube/config
 ```
 ### Deploy SES
+Wipe data on all non-system disk at all Worker Nodes
+```
+./wipe_OSD.sh
+```
 ```
 SUSEConnect --product ses/6/x86_64 -r {Registration Key}
 zypper install rook-k8s-yaml
@@ -126,9 +146,15 @@ kubectl apply -f common.yaml -f operator.yaml
 kubectl get pods -n rook-ceph
 kubectl apply -f cluster.yaml
 kubectl get pods --namespace rook-ceph
+```
+Object Storage
+```
 kubectl create -f object.yaml
 kubectl -n rook-ceph get pod -l app=rook-ceph-rgw
 kubectl create -f object-user.yaml
+```
+Get credential
+```
 kubectl -n rook-ceph get secret rook-ceph-object-user-my-store-my-user -o yaml | grep AccessKey | awk '{print $2}' | base64 --decode
 kubectl -n rook-ceph get secret rook-ceph-object-user-my-store-my-user -o yaml | grep SecretKey | awk '{print $2}' | base64 --decode
 kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath="{['data']['password']}" | base64 --decode && echo
@@ -137,7 +163,185 @@ Set NodePort
 ```
 kubectl -n rook-ceph edit service rook-ceph-mgr-dashboard
 ```
-### firewalld
+### Remove SES
+```
+kubectl delete -f object-user.yaml
+kubectl delete -f object.yaml
+kubectl delete -f cluster.yaml
+kubectl delete -f operator.yaml
+kubectl delete -f common.yaml
+rm -rf /var/lib/rook
+```
+
+#### Appendix K8S Stuff
+Unsecured Tiller Deployment
+This will install Tiller without additional certificate security.
+```
+kubectl create serviceaccount --namespace kube-system tiller
+
+kubectl create clusterrolebinding tiller \
+    --clusterrole=cluster-admin \
+    --serviceaccount=kube-system:tiller
+
+helm init \
+    --tiller-image registry.suse.com/caasp/v4/helm-tiller:2.16.1 \
+    --service-account tiller
+
+helm repo add suse https://kubernetes-charts.suse.com
+```
+
+To uninstall tiller from a kubernetes cluster:
+```
+helm reset
+```
+To delete failed tiller from a kubernetes cluster:
+```
+helm reset --force
+```
+
+##### NGINX Ingress Controller
+Configure and deploy NGINX ingress controller
+
+NodePort: The services will be publicly exposed on each node of the cluster, including master nodes, at port 30443 for HTTPS.
+```
+# Enable the creation of pod security policy
+podSecurityPolicy:
+  enabled: false
+
+# Create a specific service account
+serviceAccount:
+  create: true
+  name: nginx-ingress
+
+# Publish services on port HTTPS/30443
+# These services are exposed on each node
+controller:
+  service:
+    enableHttp: false
+    type: NodePort
+    nodePorts:
+      https: 30443
+```
+Deploy the helm chart from the $suse charts repository and pass along our configuration values file.
+```
+kubectl create namespace nginx-ingress
+
+helm install --name nginx-ingress suse/nginx-ingress \
+--namespace nginx-ingress \
+--values nginx-ingress-config-values.yaml
+```
+The result should be two running pods:
+```
+kubectl -n nginx-ingress get pod
+```
+##### Dashboard
+```
+helm install stable/kubernetes-dashboard --namespace=kube-system --name=kubernetes-dashboard
+```
+Create Service Account
+```
+kubectl apply -f admin-user.yaml
+```
+Get token
+```
+kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
+```
+kubectl proxy
+Go Dashboard. If "Not Found (404)" at login fast select some menu items.
+
+Delete Dashboard
+```
+helm delete --purge kubernetes-dashboard
+kubectl delete -f admin-user.yaml
+```
+##### Dashboard 2.0
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta1/aio/deploy/recommended.yaml
+```
+Create Service Account
+```
+kubectl apply -f admin-user_dashboard_2.yaml
+```
+```
+kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
+```
+[[http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/]]
+
+Install metric-server
+```
+helm install --name metrics-server stable/metrics-server --namespace metrics --set args={"--kubelet-insecure-tls=true, --kubelet-preferred-address-types=InternalIP\,Hostname\,ExternalIP"}
+```
+```
+kubectl top node
+kubectl top pod
+kubectl top pods -n kube-system
+```
+#### Install SCF
+Install CLI CF (cf, the Cloud Foundry command line interface.)
+```
+SUSEConnect --product sle-module-cap-tools/15.1/x86_64
+zypper install cf-cli
+```
+On all worker node:
+Swapaccounting is enabled on all worker nodes. For each node:
+SSH into the node.
+```
+eval "$(ssh-agent)"
+ssh-add ~/.ssh/id_rsa
+```
+Enable swapaccounting on the node.
+```
+grep "swapaccount=1" /etc/default/grub || sudo sed -i -r 's|^(GRUB_CMDLINE_LINUX_DEFAULT=)\"(.*.)\"|\1\"\2 swapaccount=1 \"|' /etc/default/grub
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+sudo systemctl reboot
+```
+Add Storage Class (CEPHFS)
+```
+kubectl apply -f filesystem.yaml
+kubectl apply -f storageclass.yaml
+```
+
+    # Domain for SCF. DNS for *.DOMAIN must point to the kube node's
+    # external ip. This must match the value passed to the
+    # cert-generator.sh script.
+
+#### Embeded UAA (1.5.2)
+```
+helm install suse/cf --name susecf-scf --namespace scf --values scf-config-values.yaml
+
+watch kubectl get pods --namespace scf
+watch curl -k https://uaa.cap.suse.ru:2793/.well-known/openid-configuration
+watch curl -k https://api.cap.suse.ru/v2/info
+
+UAA - wait 5 minit after run all pod
+SCF - wait 7-15 minit after run all pod
+Stratos - wait 15-30 minut after run all pod before login 
+
+cf login --skip-ssl-validation -a https://api.cap.suse.ru -u admin
+
+helm install suse/console --name susecf-console --namespace stratos --values scf-config-values.yaml
+```
+
+
+#### Delete SCF (Full version)
+kubectl delete statefulsets --all --namespace stratos
+helm delete --purge susecf-console
+kubectl delete namespace stratos
+
+kubectl delete statefulsets --all --namespace scf
+helm delete --purge susecf-scf
+kubectl delete namespace scf
+
+kubectl delete statefulsets --all --namespace uaa
+helm delete --purge susecf-uaa
+kubectl delete namespace uaa
+
+#### Appendix Node port
+Set NodePort
+```
+kubectl -n rook-ceph edit service rook-ceph-mgr-dashboard
+```
+### Appendix firewalld Node port
 ```
 firewall-cmd --list-all --zone=external
 firewall-cmd --permanent --zone=external --add-masquerade
@@ -145,3 +349,62 @@ firewall-cmd --permanent --zone=external --add-forward-port=port=30000-40000:pro
 firewall-cmd --reload
 firewall-cmd --list-all --zone=external
 ```
+
+#######
+delete nginx-ingress
+```
+helm delete nginx-ingress --purge
+```
+
+kubectl describe SomeThing
+
+
+NOTES:
+The nginx-ingress controller has been installed.
+Get the application URL by running these commands:
+  export HTTP_NODE_PORT=30080
+  export HTTPS_NODE_PORT=30443
+  export NODE_IP=$(kubectl --namespace nginx-ingress get nodes -o jsonpath="{.items[0].status.addresses[1].address}")
+
+  echo "Visit http://$NODE_IP:$HTTP_NODE_PORT to access your application via HTTP."
+  echo "Visit https://$NODE_IP:$HTTPS_NODE_PORT to access your application via HTTPS."
+
+An example Ingress that makes use of the controller:
+
+  apiVersion: extensions/v1beta1
+  kind: Ingress
+  metadata:
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    name: example
+    namespace: foo
+  spec:
+    rules:
+      - host: www.example.com
+        http:
+          paths:
+            - backend:
+                serviceName: exampleService
+                servicePort: 80
+              path: /
+    # This section is only required if TLS is to be enabled for the Ingress
+    tls:
+        - hosts:
+            - www.example.com
+          secretName: example-tls
+
+If TLS is enabled for the Ingress, a Secret containing the certificate and key must also be provided:
+
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: example-tls
+    namespace: foo
+  data:
+    tls.crt: <base64 encoded cert>
+    tls.key: <base64 encoded key>
+  type: kubernetes.io/tls
+
+
+kubectl get ingress --all-namespaces
+

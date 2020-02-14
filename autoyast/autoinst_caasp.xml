@@ -135,7 +135,7 @@ sles ALL=(ALL,ALL) NOPASSWD: ALL" > /etc/sudoers.d/sles
         <!-- replace ntp server address value bellow with one from your infrastructure -->
         <address>router.caasp.suse.ru</address>
         <iburst config:type="boolean">true</iburst>
-        <offline config:type="boolean">true</offline>
+        <offline config:type="boolean">false</offline>
       </ntp_server>
     </ntp_servers>
     <ntp_sync>systemd</ntp_sync>
