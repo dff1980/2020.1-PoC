@@ -35,10 +35,7 @@ Demonstrate:
 ```
 kubectl -n rook-ceph exec $(kubectl -n rook-ceph get pod -l "app=rook-ceph-tools" -o jsonpath="{.items[0].metadata.name}") -- ceph osd status
 ```
-2. (SES Dashboard)[https://172.17.149.48:32178/#/login] Password:
-```
-kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath="{['data']['password']}" | base64 --decode && echo
-```
+2. (SES Dashboard)[https://172.17.149.48:32178/#/login] Password: Standart Test Password
 3. Cluster,Pools,Block,Filesystems
 
 ## 4. Demostarte CF Dashboard
