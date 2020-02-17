@@ -159,11 +159,11 @@ kubectl -n rook-ceph get secret rook-ceph-object-user-my-store-my-user -o yaml |
 kubectl -n rook-ceph get secret rook-ceph-object-user-my-store-my-user -o yaml | grep SecretKey | awk '{print $2}' | base64 --decode
 kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath="{['data']['password']}" | base64 --decode && echo
 ```
-Get status
-```
+~~Get status~~
+~~```
 kubectl -n rook-ceph exec $(kubectl -n rook-ceph get pod -l "app=rook-ceph-tools" -o jsonpath="{.items[0].metadata.name}") -- ceph osd status
 kubectl -n rook-ceph exec $(kubectl -n rook-ceph get pod -l "app=rook-ceph-tools" -o jsonpath="{.items[0].metadata.name}") -- ceph df
-```
+```~~
 Set NodePort
 ```
 kubectl -n rook-ceph edit service rook-ceph-mgr-dashboard
