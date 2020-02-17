@@ -44,6 +44,7 @@ kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath="{['dat
 3. Push github application (dff1980/dizzylizard
 
 ## 5. Demostrate kube, cf cli
+### Kubectl
 1. Helm's commands interface
 ```bash
 cd microservices-demo
@@ -57,4 +58,8 @@ kubectl apply -f ingress.yaml -n shop
 Demonstrate 2, and more Shop in different namespaces.
 ```bash
 kubectl delete namespaces shop
+```
+### CF-cli
+```
+cf login --skip-ssl-validation -a https://api.cap.suse.ru -u admin
 ```
