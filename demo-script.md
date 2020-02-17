@@ -33,9 +33,9 @@ Demonstrate:
 
 1. Demostrate name spaces rook-ceph pods
 2. (SES Dashboard)[https://172.17.149.48:32178/#/login] Password:
-'''
+```
 kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath="{['data']['password']}" | base64 --decode && echo
-'''
+```
 3. Cluster,Pools,Block,Filesystems
 
 ## 4. Demostarte CF Dashboard
@@ -59,7 +59,22 @@ Demonstrate 2, and more Shop in different namespaces.
 ```bash
 kubectl delete namespaces shop
 ```
+30 sec demo
+```
+cat ingress.yaml | sed s/\$\$NAME/apple/ | kubectl create -f -
+```
 ### CF-cli
 ```
 cf login --skip-ssl-validation -a https://api.cap.suse.ru -u admin
+```
+30 sec demo.
+```
+mkdir my-php-app
+cd my-php-app
+cat << EOF > index.php
+<?php
+  phpinfo();
+?> 
+EOF
+cf push my-php-app -m 128M
 ```
