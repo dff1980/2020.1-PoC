@@ -321,7 +321,27 @@ cf login --skip-ssl-validation -a https://api.cap.suse.ru -u admin
 
 helm install suse/console --name susecf-console --namespace stratos --values scf-config-values.yaml
 ```
-
+Stratos have coredns issue (don't resolve cap domain)
+coredns configmap
+```
+  Corefile: |
+    .:53 {
+        errors
+        health
+        ready
+        kubernetes cluster.local in-addr.arpa ip6.arpa {
+           pods insecure
+           fallthrough in-addr.arpa ip6.arpa
+           ttl 30
+        }
+        prometheus :9153
+        forward . 192.168.17.254
+        cache 30
+        loop
+        reload
+        loadbalance
+    }
+```
 
 #### Delete SCF (Full version)
 kubectl delete statefulsets --all --namespace stratos
