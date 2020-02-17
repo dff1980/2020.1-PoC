@@ -32,6 +32,9 @@ Demonstrate:
 ## 3. Demonstarte SES
 
 1. Demostrate name spaces rook-ceph pods
+```
+kubectl -n rook-ceph exec $(kubectl -n rook-ceph get pod -l "app=rook-ceph-tools" -o jsonpath="{.items[0].metadata.name}") -- ceph osd status
+```
 2. (SES Dashboard)[https://172.17.149.48:32178/#/login] Password:
 ```
 kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath="{['data']['password']}" | base64 --decode && echo
