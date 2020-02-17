@@ -1,0 +1,14 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+ name: shop-ingress
+spec:
+  rules:
+  - host: sdh-web-1.suse.ru
+    http:
+      paths:
+        - path: /
+          backend:
+            serviceName: front-end
+            servicePort: 80
