@@ -67,7 +67,7 @@ cat ingress.yaml | sed s/\$\$NAME/apple/ | kubectl create -f -
 ```
 cf login --skip-ssl-validation -a https://api.cap.suse.ru -u admin
 ```
-30 sec demo.
+#### 1. 30 sec demo.
 ```
 mkdir my-php-app
 cd my-php-app
@@ -77,4 +77,43 @@ cat << EOF > index.php
 ?> 
 EOF
 cf push my-php-app -m 128M
+```
+#### 2. Simple Python Web app
+```
+cd 2020.1-PoC/demo-scripts/cf/push/web-app
+cf push -b python_buildpack
+cf app web-app
+```
+Review the App in Startos
+#### 3. Debug Worker App (binary)
+```
+cd 2020.1-PoC/demo-scripts/cf/push/worker-app
+cf push -b binary_buildpack
+cf logs worker-app --recent 
+```
+Review the App in Stratos
+#### 4. Scale App
+```
+cd 2020.1-PoC/demo-scripts/cf/resilience/imperfect-app/
+cf push
+cf scale imperfect-app -i 4
+cf app imperfect-app
+cf scale imperfect-app -k 350M -m 35M -f
+cf app imperfect-app
+```
+Scale the App With Stratos
+#### 5. Debug App
+```
+cd 2020.1-PoC/demo-scripts/cf/debugging/debug-app/
+cf push
+cf logs debug-app --recent
+cf events debug-app
+cf set-env debug-app FIXED True
+cf restart debug-app
+cf logs debug-app --recent
+cf ssh debug-app
+env
+exit
+cf apps
+cf delete debug-app
 ```
