@@ -355,7 +355,7 @@ coredns configmap
 
 ```
 cf create-org demo
-cf  target -o "demo"
+cf target -o "demo"
 cf create-space demo
 cf target -o "demo" -s "demo"
 ```
