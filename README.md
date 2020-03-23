@@ -300,10 +300,16 @@ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 sudo systemctl reboot
 ```
 Add Storage Class (CEPHFS)
+
+~~kubectl apply -f filesystem.yaml
+kubectl apply -f storageclass.yaml~~
 ```
-kubectl apply -f filesystem.yaml
-kubectl apply -f storageclass.yaml
+kubectl apply filesystem_cephfs.yaml
+kubectl apply -f filesystem_cephfs.yaml
+kubectl apply -f storageclass_cephfs.yaml
+kubectl apply -f storageclass_rbd.yaml
 ```
+
 
     # Domain for SCF. DNS for *.DOMAIN must point to the kube node's
     # external ip. This must match the value passed to the
