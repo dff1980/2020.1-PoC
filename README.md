@@ -310,7 +310,6 @@ kubectl apply -f storageclass_cephfs.yaml
 kubectl apply -f storageclass_rbd.yaml
 ```
 
-
     # Domain for SCF. DNS for *.DOMAIN must point to the kube node's
     # external ip. This must match the value passed to the
     # cert-generator.sh script.
@@ -326,6 +325,7 @@ watch curl -k https://api.cap.suse.ru/v2/info
 UAA - wait 5 minit after run all pod
 SCF - wait 7-15 minit after run all pod
 Stratos - wait 15-30 minut after run all pod before login 
+helm status susecf-scf
 
 cf login --skip-ssl-validation -a https://api.cap.suse.ru -u admin
 
