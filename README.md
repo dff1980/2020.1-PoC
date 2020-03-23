@@ -353,6 +353,15 @@ coredns configmap
     }
 ```
 
+```
+cf create-org demo
+cf  target -o "demo"
+cf create-space demo
+cf target -o "demo" -s "demo"
+```
+
+
+
 #### Delete SCF (Full version)
 kubectl delete statefulsets --all --namespace stratos
 helm delete --purge susecf-console
