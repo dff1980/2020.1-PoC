@@ -13,7 +13,7 @@ class myHandler(BaseHTTPRequestHandler):
 		self.send_header('Content-type','text/html')
 		self.end_headers()
 		# Send the html message
-		self.wfile.write("Welcome to CAP101!")
+		self.wfile.write("Welcome to Demo!")
 		return
 
 try:
