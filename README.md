@@ -300,9 +300,14 @@ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 sudo systemctl reboot
 ```
 Add Storage Class (CEPHFS)
+
+~~kubectl apply -f filesystem.yaml
+kubectl apply -f storageclass.yaml~~
 ```
-kubectl apply -f filesystem.yaml
-kubectl apply -f storageclass.yaml
+kubectl apply filesystem_cephfs.yaml
+kubectl apply -f filesystem_cephfs.yaml
+kubectl apply -f storageclass_cephfs.yaml
+kubectl apply -f storageclass_rbd.yaml
 ```
 
     # Domain for SCF. DNS for *.DOMAIN must point to the kube node's
@@ -320,6 +325,7 @@ watch curl -k https://api.cap.suse.ru/v2/info
 UAA - wait 5 minit after run all pod
 SCF - wait 7-15 minit after run all pod
 Stratos - wait 15-30 minut after run all pod before login 
+helm status susecf-scf
 
 cf login --skip-ssl-validation -a https://api.cap.suse.ru -u admin
 
@@ -346,6 +352,15 @@ coredns configmap
         loadbalance
     }
 ```
+
+```
+cf create-org demo
+cf target -o "demo"
+cf create-space demo
+cf target -o "demo" -s "demo"
+```
+
+
 
 #### Delete SCF (Full version)
 kubectl delete statefulsets --all --namespace stratos
