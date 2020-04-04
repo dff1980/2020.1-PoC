@@ -49,7 +49,7 @@ items:
         ingress.kubernetes.io/rewrite-target: /
     spec:
       rules:
-      - host: sdh-k8s.suse.ru
+      - host: caasp.suse.ru
         http:
           paths:
             - path: /$$NAME
