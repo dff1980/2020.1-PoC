@@ -5,7 +5,7 @@ metadata:
  name: shop-ingress
 spec:
   rules:
-  - host: sdh-web-1.suse.ru
+  - host: shop.caasp.suse.ru
     http:
       paths:
         - path: /
