@@ -447,3 +447,6 @@ If TLS is enabled for the Ingress, a Secret containing the certificate and key m
 
 kubectl get ingress --all-namespaces
 
+
+[Шпаргалка по kubectl](https://kubernetes.io/ru/docs/reference/kubectl/cheatsheet/)
+
