@@ -7,7 +7,7 @@ items:
       name: $$NAME
       labels:
         name: $$NAME
-  - apiVersion: apps/v1beta1
+  - apiVersion: apps/v1
     kind: Deployment
     metadata:
       name: $$NAME-app
@@ -17,6 +17,9 @@ items:
         app: $$NAME
     spec:
       replicas: 1
+      selector:
+        matchLabels:
+          app: $$NAME
       template:
         metadata:
           labels:
