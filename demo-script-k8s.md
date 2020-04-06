@@ -4,6 +4,11 @@
 1. Get kubectl config
 2. Put config to .kube directory
 3. Install kubernetes-client
+4. Create Rook Toolbox 
+```
+kubectl create -f toolbox.yaml
+watch kubectl -n rook-ceph get pod -l "app=rook-ceph-tools"    
+```    
 
 ## 1. Demonstrate Kubernetes CLI
 Demostrate cluster status:
@@ -27,6 +32,7 @@ Go to (Local host proxy dashboard link)[http://localhost:8001/api/v1/namespaces/
 Get Token
 ```
 kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
+
 ```
 Demonstrate:
 1. Cluster status
@@ -42,6 +48,13 @@ Demonstrate:
 ```
 kubectl -n rook-ceph exec $(kubectl -n rook-ceph get pod -l "app=rook-ceph-tools" -o jsonpath="{.items[0].metadata.name}") -- ceph osd status
 ```
+```
+kubectl -n rook-ceph exec -it $(kubectl -n rook-ceph get pod -l "app=rook-ceph-tools" -o jsonpath='{.items[0].metadata.name}') bash
+```
+* ceph status
+* ceph osd status
+* ceph df
+* rados df
 2. (SES Dashboard)[https://172.17.149.48:32178/#/login] Password: Standart Test Password
 3. Cluster,Pools,Block,Filesystems
 
