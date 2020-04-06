@@ -15,6 +15,7 @@ skuba cluster status
 ```
 kubectl get nodes
 kubectl top nodes
+kubectl get namespaces
 kubectl get pods --all-namespaces
 ```
 ## 2. Demonstrate Kubernates Dashboard
@@ -33,7 +34,7 @@ Demonstrate:
 3. Pod status
 4. Pod log
 5. Container shell
-6. Start pod interface and etc.
+6. Start pod interface and etc. (Create/delete pod nginx)
 
 ## 3. Demonstarte SES
 
