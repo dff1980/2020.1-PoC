@@ -96,8 +96,14 @@ Review the App in Stratos
 ```
 cd 2020.1-PoC/demo-scripts/cf/resilience/imperfect-app/
 cf push
+```
+horizontal scale
+```
 cf scale imperfect-app -i 4
 cf app imperfect-app
+```
+vertical scale
+```
 cf scale imperfect-app -k 350M -m 35M -f
 cf app imperfect-app
 ```
