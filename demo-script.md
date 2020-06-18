@@ -78,31 +78,43 @@ cat << EOF > index.php
 EOF
 cf push my-php-app -m 128M
 ```
-#### 2. Simple Python Web app
+#### 2. Explain what happened (buildpack, routes)
+```
+cf buildpacks
+cf apps
+cf routes
+```
+#### 3. Simple Python Web app
 ```
 cd 2020.1-PoC/demo-scripts/cf/push/web-app
 cf push -b python_buildpack
 cf app web-app
 ```
 Review the App in Startos
-#### 3. Debug Worker App (binary)
+#### 4. Debug Worker App (binary)
 ```
 cd 2020.1-PoC/demo-scripts/cf/push/worker-app
 cf push -b binary_buildpack
 cf logs worker-app --recent 
 ```
 Review the App in Stratos
-#### 4. Scale App
+#### 5. Scale App
 ```
 cd 2020.1-PoC/demo-scripts/cf/resilience/imperfect-app/
 cf push
+```
+horizontal scale
+```
 cf scale imperfect-app -i 4
 cf app imperfect-app
+```
+vertical scale
+```
 cf scale imperfect-app -k 350M -m 35M -f
 cf app imperfect-app
 ```
 Scale the App With Stratos
-#### 5. Debug App
+#### 6. Debug App
 ```
 cd 2020.1-PoC/demo-scripts/cf/debugging/debug-app/
 cf push
