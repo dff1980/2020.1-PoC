@@ -1,0 +1,8 @@
+dn: cn=k8s-admins,ou=Groups,dc=example,dc=org
+changetype: add
+gidNumber: 100
+objectClass: groupOfNames
+objectClass: posixGroup
+cn: k8s-admins
+ou: Groups
+memberUid: geeko

@@ -1,0 +1,16 @@
+dn: uid=geeko,ou=People,dc=example,dc=org
+changetype: add
+uid: geeko
+userPassword: {SSHA}ku9Ty4/BAQ6jmlwertO0KsTLErwP53PSJqlQ8Q==
+objectClass: posixaccount
+objectClass: inetOrgPerson
+objectClass: person
+objectClass: inetUser
+objectClass: organizationalPerson
+uidNumber: 1200
+gidNumber: 500
+givenName: User
+mail: geeko@example.org
+sn: Regular1
+homeDirectory: /home/geeko
+cn: Geeko
