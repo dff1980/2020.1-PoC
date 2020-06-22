@@ -32,6 +32,12 @@ ldapadd -v -H ldap://localhost:389 -D "cn=Directory Manager" -w suse1234 -f k8s-
 Example in ldap/oidc-dex-config
 ```bash
 kubectl --namespace=kube-system edit configmap oidc-dex-config
+```
+or
+```
+kubectl apply -f dex-389-ds.yaml
+```
+```
 kubectl --namespace=kube-system delete pod -l app=oidc-gangway
 kubectl --namespace=kube-system delete pod -l app=oidc-dex
 ```

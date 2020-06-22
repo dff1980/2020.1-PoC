@@ -1,0 +1,37 @@
+[
+  {"op": "replace",
+   "patch": "/connectors/0/config/host",
+   "value": "192.168.17.254:389"},
+
+  {"op": "replace",
+   "patch": "/connectors/0/config/bindDN",
+   "value": "cn=Directory Manager"},
+
+  {"op": "replace",
+   "patch": "/connectors/0/config/bindPW",
+   "value": "suse1234"},
+
+  {"op": "replace",
+   "patch": "/connectors/0/config/userSearch/baseDN",
+   "value": "ou=People,dc=example,dc=org"},
+
+  {"op": "replace",
+   "patch": "/connectors/0/config/userSearch/filter",
+   "value": "(objectClass=person)"},
+
+  {"op": "replace",
+   "patch": "/connectors/0/config/groupSearch/baseDN",
+   "value": "oups,dc=example,dc=org"},
+
+  {"op": "replace",
+   "patch": "/connectors/0/config/groupSearch/filter",
+   "(objectClass=groupOfNames)"},
+
+  {"op": "replace",
+   "patch": "/connectors/0/config/groupSearch/userAttr",
+   "uid"},
+
+  {"op": "replace",
+   "patch": "/connectors/0/config/groupSearch/groupAttr",
+   "memberUid"}
+]

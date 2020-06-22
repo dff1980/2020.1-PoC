@@ -1,0 +1,76 @@
+apiVersion: v1
+data:
+  config.yaml: |
+    issuer: https://api.caasp.suse.ru:32000
+
+    storage:
+      type: kubernetes
+      config:
+        inCluster: true
+
+    web:
+      https: 0.0.0.0:32000
+      tlsCert: /etc/dex/pki/tls.crt
+      tlsKey: /etc/dex/pki/tls.key
+      tlsClientCA: /etc/dex/pki/ca.crt
+
+    frontend:
+      issuer: "SUSE CaaS Platform"
+      theme: "caasp"
+      dir: /usr/share/caasp-dex/web
+
+    # This is a sample with LDAP as connector.
+    # Requires a update to fulfill your environment.
+    connectors:
+    - type: ldap
+      id: ldap
+      name: openLDAP
+      config:
+        host: openldap.kube-system.svc.cluster.local:389
+        insecureNoSSL: true
+        insecureSkipVerify: true
+        bindDN: cn=admin,dc=example,dc=com
+        bindPW: admin
+        usernamePrompt: Email Address
+        userSearch:
+          baseDN: cn=Users,dc=example,dc=com
+          filter: "(objectClass=person)"
+          username: mail
+          idAttr: DN
+          emailAttr: mail
+          nameAttr: cn
+        groupSearch:
+          baseDN: cn=Groups,dc=example,dc=com
+          filter: "(objectClass=group)"
+          userAttr: DN
+          groupAttr: member
+          nameAttr: cn
+
+    oauth2:
+      skipApprovalScreen: true
+
+    staticClients:
+    - id: oidc
+      redirectURIs:
+      - 'https://api.caasp.suse.ru:32001/callback'
+      name: 'OIDC'
+      secret: c9c8d61a584f89cbb0fb2e71
+      trustedPeers:
+      - oidc-cli
+    - id: oidc-cli
+      public: true
+      redirectURIs:
+      - 'urn:ietf:wg:oauth:2.0:oob'
+      name: 'OIDC CLI'
+      secret: swac7qakes7AvucH8bRucucH
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"config.yaml":"issuer: https://api.caasp.suse.ru:32000\n\nstorage:\n  type: kubernetes\n  config:\n    inCluster: true\n\nweb:\n  https: 0.0.0.0:32000\n  tlsCert: /etc/dex/pki/tls.crt\n  tlsKey: /etc/dex/pki/tls.key\n  tlsClientCA: /etc/dex/pki/ca.crt\n\nfrontend:\n  issuer: \"SUSE CaaS Platform\"\n  theme: \"caasp\"\n  dir: /usr/share/caasp-dex/web\n\n# This is a sample with LDAP as connector.\n# Requires a update to fulfill your environment.\nconnectors:\n- type: ldap\n  id: ldap\n  name: openLDAP\n  config:\n    host: openldap.kube-system.svc.cluster.local:389\n    insecureNoSSL: true\n    insecureSkipVerify: true\n    bindDN: cn=admin,dc=example,dc=com\n    bindPW: admin\n    usernamePrompt: Email Address\n    userSearch:\n      baseDN: cn=Users,dc=example,dc=com\n      filter: \"(objectClass=person)\"\n      username: mail\n      idAttr: DN\n      emailAttr: mail\n      nameAttr: cn\n    groupSearch:\n      baseDN: cn=Groups,dc=example,dc=com\n      filter: \"(objectClass=group)\"\n      userAttr: DN\n      groupAttr: member\n      nameAttr: cn\n\noauth2:\n  skipApprovalScreen: true\n\nstaticClients:\n- id: oidc\n  redirectURIs:\n  - 'https://api.caasp.suse.ru:32001/callback'\n  name: 'OIDC'\n  secret: c9c8d61a584f89cbb0fb2e71\n  trustedPeers:\n  - oidc-cli\n- id: oidc-cli\n  public: true\n  redirectURIs:\n  - 'urn:ietf:wg:oauth:2.0:oob'\n  name: 'OIDC CLI'\n  secret: swac7qakes7AvucH8bRucucH\n"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"oidc-dex-config","namespace":"kube-system"}}
+  creationTimestamp: "2020-03-23T11:19:16Z"
+  name: oidc-dex-config
+  namespace: kube-system
+  resourceVersion: "36208499"
+  selfLink: /api/v1/namespaces/kube-system/configmaps/oidc-dex-config
+  uid: adc31479-431a-4b7f-8a55-5f7a694e5642

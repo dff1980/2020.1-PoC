@@ -1,0 +1,7 @@
+applications:
+- name: worker-app
+  command: chmod +x while-loop && ./while-loop
+  no-route: true
+  health-check-type: none
+  memory: 64M
+  buildpack: binary_buildpack
