@@ -157,6 +157,7 @@ cf delete debug-app
 ```
 cd 2020.1-PoC/demo-scripts/cf/07-cf-redis-example-app
 cf push --no-start
+cf marketplace
 cf create-service redis 5-0-7 redis
 cf service redis
 watch cf service redis
