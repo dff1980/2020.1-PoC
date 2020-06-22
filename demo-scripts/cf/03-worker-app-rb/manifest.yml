@@ -1,0 +1,10 @@
+---
+applications:
+- name: work-app-rb
+  memory: 64M
+  disk_quota: 256M
+  no-route: true
+  health-check-type: none
+  patch: .
+  command: ruby periodic_logger.rb
+  buildpacks: [ruby_buildpack]
