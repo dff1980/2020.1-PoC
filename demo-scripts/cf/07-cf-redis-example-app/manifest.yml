@@ -1,0 +1,8 @@
+---
+applications:
+- name: redis-example-app
+  memory: 256M
+  randome-route: true
+  instances: 1
+  path: .
+  buildpacks: [ruby_buildpack]
