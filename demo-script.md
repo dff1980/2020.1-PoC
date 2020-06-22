@@ -161,8 +161,8 @@ cf marketplace
 cf create-service redis 5-0-7 redis
 cf service redis
 watch cf service redis
-cf bind-service redis-example-app-pzhukov redis
-cf start redis-example-app-pzhukov
+cf bind-service redis-example-app redis
+cf start redis-example-app
 ```
 Show app in web-browser
 Start some instace, and show web app change.
