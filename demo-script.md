@@ -78,6 +78,7 @@ cat << EOF > index.php
 EOF
 cf push my-php-app-pzhukov -m 128M
 ``` 
+Open app in web-browser.
 #### 2. Explain what happened (buildpack, routes)
 ```
 cf buildpacks
@@ -86,22 +87,30 @@ cf routes
 ```
 #### 3. Simple Python Web app
 ```
-cd 2020.1-PoC/demo-scripts/cf/push/web-app
-cf push -b python_buildpack
+cd 2020.1-PoC/demo-scripts/cf/02-web-app
+cf push
 cf app web-app
 ```
+Go to Web-browser open app
+```
+cf ssh web-app
+cd /app
+ls
+cat 
+```
 Review the App in Startos
+Show ssh and log screen
 ping router, talk about gate and router.
 #### 4. Debug Worker App (binary)
 ```
-cd 2020.1-PoC/demo-scripts/cf/push/worker-app
-cf push -b binary_buildpack
+cd 2020.1-PoC/demo-scripts/cf/03-worker-app
+cf push
 cf logs worker-app --recent 
 ```
 Review the App in Stratos
 #### 5. Scale App
 ```
-cd 2020.1-PoC/demo-scripts/cf/resilience/imperfect-app/
+cd 2020.1-PoC/demo-scripts/cf/04-imperfect-app/
 cf push
 ```
 horizontal scale
@@ -114,11 +123,12 @@ vertical scale
 cf scale imperfect-app -k 350M -m 35M -f
 cf app imperfect-app
 ```
-Scale the App With Stratos
-
+Scale the App With Stratos.
+Show autorecovery when app fail. (push to button "Crash me" some time and show result on Stratos and recovered app).
+Show Autoscale.
 #### 6. Blue - Green deployment
 ```
-cd 2020.1-PoC/demo-scripts/cf/push/web-app
+cd 2020.1-PoC/demo-scripts/cf/05-web-app-blue-green
 cf push -f mod-manifest.yml
 ```
 Edite version and scale count in web-app.py
@@ -126,9 +136,11 @@ Edite version in mod-manifest.yml
 ```
 cf push -f mod-manifest.yml
 ```
+Refresh some time web-app and show 2 version worked at the same time.
+Scale out version 1 scale in version 2.
 #### 7. Debug App
 ```
-cd 2020.1-PoC/demo-scripts/cf/debugging/debug-app/
+cd 2020.1-PoC/demo-scripts/cf/06-debug-app/
 cf push
 cf logs debug-app --recent
 cf events debug-app
@@ -141,3 +153,18 @@ exit
 cf apps
 cf delete debug-app
 ```
+#### 8. Statefull App
+```
+cd 2020.1-PoC/demo-scripts/cf/07-cf-redis-example-app
+cf push --no-start
+cf create-service redis 5-0-7 redis
+cf service redis
+watch cf service redis
+cf bind-service redis-example-app-pzhukov redis
+cf start redis-example-app-pzhukov
+```
+Show redis-example-app-pzhukov.cap.explore.suse.dev/foo
+```
+curl -X PUT redis-example-app-pzhukov.cap.explore.suse.dev/foo -d 'data=demo'
+```
+Show redis-example-app-pzhukov.cap.explore.suse.dev/foo
