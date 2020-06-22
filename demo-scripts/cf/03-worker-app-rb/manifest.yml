@@ -7,4 +7,4 @@ applications:
   health-check-type: none
   patch: .
   command: ruby periodic_logger.rb
-  buildpacks: [ruby_buildpack]
+  buildpack: ruby_buildpack
