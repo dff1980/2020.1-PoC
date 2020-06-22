@@ -163,8 +163,5 @@ watch cf service redis
 cf bind-service redis-example-app-pzhukov redis
 cf start redis-example-app-pzhukov
 ```
-Show redis-example-app-pzhukov.cap.explore.suse.dev/foo
-```
-curl -X PUT redis-example-app-pzhukov.cap.explore.suse.dev/foo -d 'data=demo'
-```
-Show redis-example-app-pzhukov.cap.explore.suse.dev/foo
+Show app in web-browser
+Start some instace, and show web app change.
