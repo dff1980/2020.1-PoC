@@ -76,8 +76,8 @@ cat << EOF > index.php
   phpinfo();
 ?> 
 EOF
-cf push my-php-app -m 128M
-```
+cf push my-php-app-pzhukov -m 128M
+``` 
 #### 2. Explain what happened (buildpack, routes)
 ```
 cf buildpacks
@@ -91,6 +91,7 @@ cf push -b python_buildpack
 cf app web-app
 ```
 Review the App in Startos
+ping router, talk about gate and router.
 #### 4. Debug Worker App (binary)
 ```
 cd 2020.1-PoC/demo-scripts/cf/push/worker-app
@@ -114,7 +115,18 @@ cf scale imperfect-app -k 350M -m 35M -f
 cf app imperfect-app
 ```
 Scale the App With Stratos
-#### 6. Debug App
+
+#### 6. Blue - Green deployment
+```
+cd 2020.1-PoC/demo-scripts/cf/push/web-app
+cf push -f mod-manifest.yml
+```
+Edite version and scale count in web-app.py
+Edite version in mod-manifest.yml
+```
+cf push -f mod-manifest.yml
+```
+#### 7. Debug App
 ```
 cd 2020.1-PoC/demo-scripts/cf/debugging/debug-app/
 cf push
