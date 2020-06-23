@@ -14,7 +14,7 @@ class myHandler(BaseHTTPRequestHandler):
 		self.end_headers()
 		# Send the html message
 		self.wfile.write("<h1>Welcome to Demo!</h1>")
-		self.wfile.write("<h2>Web app v.2</h2>")
+		self.wfile.write("<h2>Web app v.0</h2>")
 		return
 
 try:

@@ -1,7 +1,7 @@
 applications:
 - name: web-app-v2
   memory: 64M
-  instances: 2
+  instances: 4
   buildpack: python_buildpack
   command: python web-app.py
   host: smooth_deploy_pzhukov
