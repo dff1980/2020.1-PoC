@@ -115,8 +115,6 @@ Review the App in Startos
 Show ssh and log screen
 Show firehouse (in local Startos)
 --ping router, talk about gate and router.
-
-Review the App in Stratos
 #### 5. Scale App
 ```
 cd 2020.1-PoC/demo-scripts/cf/04-imperfect-app/
@@ -177,3 +175,35 @@ exit
 cf apps
 cf delete debug-app
 ```
+#### 9. Debug Worker App (Ruby ENV)
+```
+cd 2020.1-PoC/demo-scripts/cf/03-worker-app-rb
+cf push
+cf logs work-app-rb
+cf logs work-app-rb --recent
+
+```
+```
+cf events work-app-rb
+```
+```
+cf ssh work-app-rb
+cd /app
+ls
+cat periodic_logger.rb
+```
+```
+cf set-env work-app-rb OUTPUT_TEXT stable
+```
+Or set enviroment in Stratos
+```
+cf restart work-app-rb
+```
+Or
+```
+cf restage work-app-rb
+```
+
+Review the App in Startos
+Show ssh and log screen
+Show firehouse (in local Startos)
