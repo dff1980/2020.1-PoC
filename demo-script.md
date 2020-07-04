@@ -147,7 +147,22 @@ cf push -f mod-manifest.yml
 ```
 Refresh some time web-app and show 2 version worked at the same time.
 Scale out version 1 scale in version 2.
-#### 7. Debug App
+
+#### 7. Statefull App
+```
+cd 2020.1-PoC/demo-scripts/cf/07-cf-redis-example-app
+cf push --no-start
+cf marketplace
+cf create-service redis 5-0-7 redis
+cf service redis
+watch cf service redis
+cf bind-service redis-example-app redis
+cf start redis-example-app
+```
+Show app in web-browser
+Start some instace, and show web app change.
+
+#### 8. Debug App
 ```
 cd 2020.1-PoC/demo-scripts/cf/06-debug-app/
 cf push
@@ -162,16 +177,3 @@ exit
 cf apps
 cf delete debug-app
 ```
-#### 8. Statefull App
-```
-cd 2020.1-PoC/demo-scripts/cf/07-cf-redis-example-app
-cf push --no-start
-cf marketplace
-cf create-service redis 5-0-7 redis
-cf service redis
-watch cf service redis
-cf bind-service redis-example-app redis
-cf start redis-example-app
-```
-Show app in web-browser
-Start some instace, and show web app change.
