@@ -91,22 +91,31 @@ cd 2020.1-PoC/demo-scripts/cf/02-web-app
 cf push
 cf app web-app
 ```
+Review manifest
 Go to Web-browser open app
+Review the App in Startos
+#### 4. Debug Worker App (Ruby)
 ```
-cf ssh web-app
+cd 2020.1-PoC/demo-scripts/cf/03-worker-app-rb
+cf push
+cf logs work-app-rb
+cf logs work-app-rb --recent
+
+```
+```
+cf events work-app-rb
+```
+```
+cf ssh work-app-rb
 cd /app
 ls
-cat 
+cat periodic_logger.rb
 ```
 Review the App in Startos
 Show ssh and log screen
-ping router, talk about gate and router.
-#### 4. Debug Worker App (binary)
-```
-cd 2020.1-PoC/demo-scripts/cf/03-worker-app
-cf push
-cf logs worker-app --recent 
-```
+Show firehouse (in local Startos)
+--ping router, talk about gate and router.
+
 Review the App in Stratos
 #### 5. Scale App
 ```
