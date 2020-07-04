@@ -94,11 +94,12 @@ autoyast.sh
 ```
 ./dhcpd.sh
 ```
-Jul. 2020 need add zone to resolve CAP zone inside CAP to LB or Worker Nodes maybe master (if master is LB)
 #### 5. Configure DNS
 ```
 ./named.sh
 ```
+Jul. 2020 need add zone to resolve CAP zone inside CAP to LB or Worker Nodes maybe master (if master is LB)
+"Traffic inside CAP will resolve to a Kubernetes worker nodes (in production load balancer) in that dedicated domain."
 #### 6. Configure Firewall
 ```
 ./firewall.sh
