@@ -163,6 +163,8 @@ kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath="{['dat
 ```
 Get status
 ```
+cd /root/k8s-yaml/rook/ceph
+kubectl create -f toolbox.yaml
 kubectl -n rook-ceph exec $(kubectl -n rook-ceph get pod -l "app=rook-ceph-tools" -o jsonpath="{.items[0].metadata.name}") -- ceph osd status
 ```
 ~~Get status~~
