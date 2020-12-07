@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<zone>
+  <short>External</short>
+  <description>For use on external networks. You do not trust the other computers on networks to not harm your computer. Only selected incoming connections are accepted.</description>
+  <interface name="eth0"/>
+  <service name="ssh"/>
+  <masquerade/>
+  <forward-port port="30000-40000" protocol="tcp" to-addr="192.168.17.10"/>
+  <forward-port port="6443" protocol="tcp" to-port="6443" to-addr="192.168.17.10"/>
+  <forward-port port="8443" protocol="tcp" to-port="8443" to-addr="192.168.17.10"/>
+  <forward-port port="2793" protocol="tcp" to-port="2793" to-addr="192.168.17.10"/>
+  <forward-port port="80" protocol="tcp" to-addr="192.168.17.10"/>
+  <forward-port port="443" protocol="tcp" to-addr="192.168.17.10"/>
+  <forward-port port="30080" protocol="tcp" to-addr="192.168.17.10"/>
+  <forward-port port="30443" protocol="tcp" to-addr="192.168.17.10"/>
+  <forward-port port="2222" protocol="tcp" to-addr="192.168.17.10"/>
+</zone>
