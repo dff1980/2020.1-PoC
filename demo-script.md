@@ -91,23 +91,30 @@ cd 2020.1-PoC/demo-scripts/cf/02-web-app
 cf push
 cf app web-app
 ```
+Review manifest
 Go to Web-browser open app
+Review the App in Startos
+#### 4. Debug Worker App (Ruby)
 ```
-cf ssh web-app
+cd 2020.1-PoC/demo-scripts/cf/03-worker-app-rb
+cf push
+cf logs work-app-rb
+cf logs work-app-rb --recent
+
+```
+```
+cf events work-app-rb
+```
+```
+cf ssh work-app-rb
 cd /app
 ls
-cat 
+cat periodic_logger.rb
 ```
 Review the App in Startos
 Show ssh and log screen
-ping router, talk about gate and router.
-#### 4. Debug Worker App (binary)
-```
-cd 2020.1-PoC/demo-scripts/cf/03-worker-app
-cf push
-cf logs worker-app --recent 
-```
-Review the App in Stratos
+Show firehouse (in local Startos)
+--ping router, talk about gate and router.
 #### 5. Scale App
 ```
 cd 2020.1-PoC/demo-scripts/cf/04-imperfect-app/
@@ -138,7 +145,22 @@ cf push -f mod-manifest.yml
 ```
 Refresh some time web-app and show 2 version worked at the same time.
 Scale out version 1 scale in version 2.
-#### 7. Debug App
+
+#### 7. Statefull App
+```
+cd 2020.1-PoC/demo-scripts/cf/07-cf-redis-example-app
+cf push --no-start
+cf marketplace
+cf create-service redis 5-0-7 redis
+cf service redis
+watch cf service redis
+cf bind-service redis-example-app redis
+cf start redis-example-app
+```
+Show app in web-browser
+Start some instace, and show web app change.
+
+#### 8. Debug App
 ```
 cd 2020.1-PoC/demo-scripts/cf/06-debug-app/
 cf push
@@ -153,16 +175,35 @@ exit
 cf apps
 cf delete debug-app
 ```
-#### 8. Statefull App
+#### 9. Debug Worker App (Ruby ENV)
 ```
-cd 2020.1-PoC/demo-scripts/cf/07-cf-redis-example-app
-cf push --no-start
-cf marketplace
-cf create-service redis 5-0-7 redis
-cf service redis
-watch cf service redis
-cf bind-service redis-example-app redis
-cf start redis-example-app
+cd 2020.1-PoC/demo-scripts/cf/03-worker-app-rb
+cf push
+cf logs work-app-rb
+cf logs work-app-rb --recent
+
 ```
-Show app in web-browser
-Start some instace, and show web app change.
+```
+cf events work-app-rb
+```
+```
+cf ssh work-app-rb
+cd /app
+ls
+cat periodic_logger.rb
+```
+```
+cf set-env work-app-rb OUTPUT_TEXT stable
+```
+Or set enviroment in Stratos
+```
+cf restart work-app-rb
+```
+Or
+```
+cf restage work-app-rb
+```
+
+Review the App in Startos
+Show ssh and log screen
+Show firehouse (in local Startos)

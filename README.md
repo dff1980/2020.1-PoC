@@ -98,6 +98,8 @@ autoyast.sh
 ```
 ./named.sh
 ```
+Jul. 2020 need add zone to resolve CAP zone inside CAP to LB or Worker Nodes maybe master (if master is LB)
+"Traffic inside CAP will resolve to a Kubernetes worker nodes (in production load balancer) in that dedicated domain."
 #### 6. Configure Firewall
 ```
 ./firewall.sh
@@ -161,6 +163,8 @@ kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath="{['dat
 ```
 Get status
 ```
+cd /root/k8s-yaml/rook/ceph
+kubectl create -f toolbox.yaml
 kubectl -n rook-ceph exec $(kubectl -n rook-ceph get pod -l "app=rook-ceph-tools" -o jsonpath="{.items[0].metadata.name}") -- ceph osd status
 ```
 ~~Get status~~
