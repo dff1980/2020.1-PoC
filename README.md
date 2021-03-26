@@ -371,6 +371,7 @@ cf target -o "demo" -s "demo"
 
 
 #### Delete SCF (Full version)
+```
 kubectl delete statefulsets --all --namespace stratos
 helm delete --purge susecf-console
 kubectl delete namespace stratos
@@ -382,7 +383,7 @@ kubectl delete namespace scf
 kubectl delete statefulsets --all --namespace uaa
 helm delete --purge susecf-uaa
 kubectl delete namespace uaa
-
+```
 #### Appendix Node port
 Set NodePort
 ```
