@@ -104,5 +104,7 @@ systemctl start  named.service
 
 if ! grep "127.0.0.1" /run/netconfig/resolv.conf
  then
-  sed -i '/^nameserver/i nameserver 127.0.0.1' /run/netconfig/resolv.conf
+  #sed -i '/^nameserver/i nameserver 127.0.0.1' /run/netconfig/resolv.conf
+  sudo sed -i "s/NETCONFIG_DNS_STATIC_SERVERS=\".*\"/NETCONFIG_DNS_STATIC_SERVERS=\"127.0.0.1\"/" /etc/sysconfig/network/config
+  sudo netconfig update -f
  fi
